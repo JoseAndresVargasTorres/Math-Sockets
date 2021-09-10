@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Math-Sockets.iml" filepath="$PROJECT_DIR$/Math-Sockets.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MathGame/MathGame.iml" filepath="$PROJECT_DIR$/MathGame/MathGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Tesst proyecto.iml" filepath="$PROJECT_DIR$/.idea/Tesst proyecto.iml" />
     </modules>
   </component>
 </project>

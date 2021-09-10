@@ -1,5 +1,5 @@
 public class ListaDoble {
-    private NodoDoble inicio, fin;
+    public NodoDoble inicio, fin;
 
     public ListaDoble() {
         inicio = fin = null;
@@ -8,6 +8,10 @@ public class ListaDoble {
     // Método para saber cuando la lista está vacía
     public boolean estVacia() {
         return inicio == null;
+    }
+    //Método para obtener el panel de cada casilla
+    public Object getPan() {
+        return inicio.pan;
     }
 
     // Método para mover el jugador1
@@ -21,7 +25,6 @@ public class ListaDoble {
 
     }
     // Método para mover el jugador 2
-
     public void mover2() {
         NodoDoble aux = inicio;
         while (!aux.jugador2) {
@@ -29,19 +32,19 @@ public class ListaDoble {
         }
         aux.siguiente.jugador2 = true;
         aux.jugador2 = false;
-        }
+    }
 
     // Método para agregar nodos al final
-    public void agregarAlFinal(String casilla, Object panel, boolean isjugador1, boolean isjugador2) {
+    public void agregarAlFinal(String casilla, javax.swing.JTextPane panel, boolean isjugador1, boolean isjugador2) {
         if (!estVacia()) {
-            fin = new NodoDoble(casilla, panel, null,  fin, isjugador1, isjugador2);
+            fin = new NodoDoble(casilla, panel, null, fin, isjugador1, isjugador2);
             fin.anterior.siguiente = fin;
         } else {
             inicio = fin = new NodoDoble(casilla, panel, false, false);
         }
     }
     // Método para agregar al inicio
-    public void agregarAlInicio(String casilla, Object panel, boolean isjugador1, boolean isjugador2) {
+    public void agregarAlInicio(String casilla, javax.swing.JTextPane panel, boolean isjugador1, boolean isjugador2) {
         if (!estVacia()) {
             inicio = new NodoDoble(casilla, panel, inicio, null, isjugador1, isjugador2);
             inicio.siguiente.anterior = inicio;
@@ -74,6 +77,15 @@ public class ListaDoble {
                 System.out.print(dato+": "+isj1+aux.jugador1+"\n"+dato+": "+isj2+aux.jugador2+"\n");
                 aux=aux.anterior;
             }
+        }
+    }
+    public NodoDoble deleteFirst() {
+        if (this.inicio != null) {
+            NodoDoble temp = this.inicio;
+            this.inicio = this.inicio.siguiente;
+            return temp;
+        } else {
+            return null;
         }
     }
 }
