@@ -13,10 +13,10 @@ public class ListaDoble {
     // Método para mover el jugador1
     public void mover1() {
         NodoDoble aux = inicio;
-        while (!aux.jugador1) {
-            aux = aux.siguiente;
+        while (!aux.getisJugador1()) {
+            aux = aux.next;
         }
-        aux.siguiente.jugador1 = true;
+        aux.next.jugador1 = true;
         aux.jugador1 = false;
 
     }
@@ -25,9 +25,9 @@ public class ListaDoble {
     public void mover2() {
         NodoDoble aux = inicio;
         while (!aux.jugador2) {
-            aux = aux.siguiente;
+            aux = aux.next;
         }
-        aux.siguiente.jugador2 = true;
+        aux.next.jugador2 = true;
         aux.jugador2 = false;
         }
 
