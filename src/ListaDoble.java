@@ -13,10 +13,10 @@ public class ListaDoble {
     // Método para mover el jugador1
     public void mover1() {
         NodoDoble aux = inicio;
-        while (!aux.getisJugador1()) {
-            aux = aux.next;
+        while (!aux.jugador1) {
+            aux = aux.siguiente;
         }
-        aux.next.jugador1 = true;
+        aux.siguiente.jugador1 = true;
         aux.jugador1 = false;
 
     }
@@ -25,28 +25,28 @@ public class ListaDoble {
     public void mover2() {
         NodoDoble aux = inicio;
         while (!aux.jugador2) {
-            aux = aux.next;
+            aux = aux.siguiente;
         }
-        aux.next.jugador2 = true;
+        aux.siguiente.jugador2 = true;
         aux.jugador2 = false;
         }
 
     // Método para agregar nodos al final
-    public void agregarAlFinal(String casilla, boolean isjugador1, boolean isjugador2) {
+    public void agregarAlFinal(String casilla, Object panel, boolean isjugador1, boolean isjugador2) {
         if (!estVacia()) {
-            fin = new NodoDoble(casilla, null, fin, isjugador1, isjugador2);
+            fin = new NodoDoble(casilla, panel, null,  fin, isjugador1, isjugador2);
             fin.anterior.siguiente = fin;
         } else {
-            inicio = fin = new NodoDoble(casilla, false, false);
+            inicio = fin = new NodoDoble(casilla, panel, false, false);
         }
     }
     // Método para agregar al inicio
-    public void agregarAlInicio(String casilla, boolean isjugador1, boolean isjugador2) {
+    public void agregarAlInicio(String casilla, Object panel, boolean isjugador1, boolean isjugador2) {
         if (!estVacia()) {
-            inicio = new NodoDoble(casilla, inicio, null, isjugador1, isjugador2);
+            inicio = new NodoDoble(casilla, panel, inicio, null, isjugador1, isjugador2);
             inicio.siguiente.anterior = inicio;
         } else {
-            inicio = fin = new NodoDoble(casilla, false, false);
+            inicio = fin = new NodoDoble(casilla, panel, false, false);
         }
     }
     // Método para mostrar la lista de inicio a fin
