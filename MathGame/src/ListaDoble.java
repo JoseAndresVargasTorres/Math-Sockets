@@ -1,20 +1,32 @@
 public class ListaDoble {
+    /**
+     * La clase ListaDoble es la que permite conectar las casillas, complementandose con la clase NodoDoble
+     */
     public NodoDoble inicio, fin;
 
     public ListaDoble() {
         inicio = fin = null;
     }
 
-    // Método para saber cuando la lista está vacía
+    /**
+     * Metodo para saber cuando la lista está vacía
+      */
+
     public boolean estVacia() {
         return inicio == null;
     }
-    //Método para obtener el panel de cada casilla
+
+    /**
+     * Metodo para obtener el panel de cada casilla
+     */
+
     public Object getPan() {
         return inicio.pan;
     }
 
-    // Método para mover el jugador1
+    /**
+     * Metodo para mover el jugador1
+     */
     public void mover1() {
         NodoDoble aux = inicio;
         while (!aux.jugador1) {
@@ -24,7 +36,10 @@ public class ListaDoble {
         aux.jugador1 = false;
 
     }
-    // Método para mover el jugador 2
+
+    /**
+     * Metodo para mover el jugador
+     */
     public void mover2() {
         NodoDoble aux = inicio;
         while (!aux.jugador2) {
@@ -34,7 +49,13 @@ public class ListaDoble {
         aux.jugador2 = false;
     }
 
-    // Método para agregar nodos al final
+    /**
+     * Metodo para agregar nodos al final
+     * @param casilla este parametro se utiliza para definir el tipo de casilla (Reto, Trampa, Tunel)
+     * @param panel este parametro se utiliza para definir el JPanel de cada casilla
+     * @param isjugador1 este parametro permite saber si el jugador1 se encuentra en la casilla
+     * @param isjugador2 este parametro permite saber si el jugador2 se encuentra en la casilla
+     */
     public void agregarAlFinal(String casilla, javax.swing.JTextPane panel, boolean isjugador1, boolean isjugador2) {
         if (!estVacia()) {
             fin = new NodoDoble(casilla, panel, null, fin, isjugador1, isjugador2);
@@ -43,7 +64,14 @@ public class ListaDoble {
             inicio = fin = new NodoDoble(casilla, panel, false, false);
         }
     }
-    // Método para agregar al inicio
+
+    /**
+     * Metodo para agregar al inicio
+     * @param casilla este parametro se utiliza para definir el tipo de casilla (Reto, Trampa, Tunel)
+     * @param panel este parametro se utiliza para definir el JPanel de cada casilla
+     * @param isjugador1 este parametro permite saber si el jugador1 se encuentra en la casilla
+     * @param isjugador2 este parametro permite saber si el jugador2 se encuentra en la casilla
+     */
     public void agregarAlInicio(String casilla, javax.swing.JTextPane panel, boolean isjugador1, boolean isjugador2) {
         if (!estVacia()) {
             inicio = new NodoDoble(casilla, panel, inicio, null, isjugador1, isjugador2);
@@ -52,7 +80,10 @@ public class ListaDoble {
             inicio = fin = new NodoDoble(casilla, panel, false, false);
         }
     }
-    // Método para mostrar la lista de inicio a fin
+
+    /**
+     * Metodo para mostrar la lista de inicio a fin
+     */
     public void mostrarLIF(){
         if (!estVacia()) {
             String isj1 = "Jugador1:";
@@ -66,7 +97,10 @@ public class ListaDoble {
             }
         }
     }
-    // Método para mostrar la lista de fin a inicio
+
+    /**
+     * Metodo para mostrar la lista de fin a inicio
+     */
     public void mostrarLFI(){
         if (!estVacia()) {
             String isj1 = "Jugador1:";
@@ -79,6 +113,11 @@ public class ListaDoble {
             }
         }
     }
+
+    /**
+     * Este metodo permite eliminar el primer nodo
+     * @return null
+     */
     public NodoDoble deleteFirst() {
         if (this.inicio != null) {
             NodoDoble temp = this.inicio;

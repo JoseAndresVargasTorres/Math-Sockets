@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 /**
  * Esta clase es para crear un servidor con interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz
+ * @author Kendall Marín Muñoz, Carlos Andres Contreras Luna, Jose Andres Torres Vargas
  */
 public class Server extends javax.swing.JFrame {
     ServerSocket ss;
@@ -440,7 +440,9 @@ public class Server extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * Elemtos utilizados en la interfaz del servidor
+     */
     private javax.swing.JLabel JP2;
     private javax.swing.JTextPane Panel1;
     private javax.swing.JTextPane Panel10;
@@ -475,5 +477,4 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    // End of variables declaration//GEN-END:variables
 }

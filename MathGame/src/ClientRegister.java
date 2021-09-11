@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 /**
  * Esta clase es para registrar al cliente con una interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz
+ * @author Kendall Marín Muñoz, Carlos Andres Contreras Luna, Jose Andres Torres Vargas
  */
 public class ClientRegister extends javax.swing.JFrame {
     /**
@@ -175,10 +175,11 @@ public class ClientRegister extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    /**
+     * Creacion de los elemntos que se observan en la interfaz
+     */
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton join;
     private javax.swing.JTextField name;
-    // End of variables declaration//GEN-END:variables
 }

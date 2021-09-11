@@ -324,10 +324,11 @@ public class Micliente extends javax.swing.JFrame {
     }// Evento al cerrar la ventana
 
     /**
+     * Elementos utilizados en la interfaz
      * @param args los argumentos de la línea de comando
      */
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+
     private javax.swing.JList<String> UL;
     private javax.swing.JButton enviar;
     private javax.swing.JLabel idlabel;
@@ -344,5 +345,4 @@ public class Micliente extends javax.swing.JFrame {
     private javax.swing.JTextArea msgBox;
     private javax.swing.JTextField msgText;
     private javax.swing.JButton todos;
-    // End of variables declaration//GEN-END:variables
 }
