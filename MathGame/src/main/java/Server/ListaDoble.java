@@ -33,22 +33,22 @@ public class ListaDoble {
         }
         aux.siguiente.jugador2 = true;
         aux.jugador2 = false;
-    }
-
+        }
+    
     /*
     //Método propio para mover el jugador de nodo
     public void moverj1(){
         NodoDoble aux = inicio;
         if(inicio == null){
-            return;
+            return;           
         }
-        if(aux.jugador1 && aux.siguiente != null){
+        if(aux.jugador1 && aux.siguiente != null){            
             aux.siguiente.jugador1 = true;
             aux.jugador1 = false;
             aux = aux.siguiente;
         }else{
             aux.jugador1 = false;
-        }
+        }        
     }*/
 
     // Método para agregar nodos al final

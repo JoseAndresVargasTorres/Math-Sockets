@@ -6,7 +6,7 @@ public class NodoDoble {
     public javax.swing.JTextPane pan;
     public boolean jugador1;
     public boolean jugador2;
-    NodoDoble siguiente, anterior;
+    public NodoDoble siguiente, anterior;
     public NodoDoble(String casilla, javax.swing.JTextPane panel, boolean jugador1, boolean jugador2) {
         this(casilla, panel, null, null, false, false);
     }
