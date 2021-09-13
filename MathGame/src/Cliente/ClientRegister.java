@@ -1,3 +1,5 @@
+package Cliente;
+
 
 import java.awt.event.ActionEvent;
 import java.io.DataInputStream;
@@ -8,7 +10,7 @@ import javax.swing.JOptionPane;
 /**
  * Esta clase es para registrar al cliente con una interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz, Carlos Andres Contreras Luna, Jose Andres Torres Vargas
+ * @author Kendall Marín Muñoz
  */
 public class ClientRegister extends javax.swing.JFrame {
     /**
@@ -175,11 +177,10 @@ public class ClientRegister extends javax.swing.JFrame {
         });
     }
 
-    /**
-     * Creacion de los elemntos que se observan en la interfaz
-     */
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton join;
     private javax.swing.JTextField name;
+    // End of variables declaration//GEN-END:variables
 }
