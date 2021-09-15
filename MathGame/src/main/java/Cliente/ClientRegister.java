@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 /**
  * Esta clase es para registrar al cliente con una interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz
+ * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
  */
 public class ClientRegister extends javax.swing.JFrame {
     /**

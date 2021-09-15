@@ -18,13 +18,13 @@ import javax.swing.*;
 /**
  * Esta clase es para crear un servidor con interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz,Carlos Contreras, Jose Andres Vargas Torres
+ * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
  */
 public class Server extends javax.swing.JFrame {
     ServerSocket ss;
     HashMap clientColl = new HashMap();
     /**
-     * Crea un nuevo Server Socket
+     * Aqui se encuneran los metodos y atributos de utilizados en la clase server
      */
     int p1x = 55;
     int p1x2 = 106;
@@ -35,6 +35,10 @@ public class Server extends javax.swing.JFrame {
     int movex1 = 105;
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
+    
+    /**
+     * Este metodo permite mover al jugador 1 de casilla
+     */
     
     public void mover1(){
         listita.mover1();
@@ -56,6 +60,11 @@ public class Server extends javax.swing.JFrame {
             }
         }
     }
+    
+    /**
+     * Este metodo permite mover al jugador 2 de casilla
+     */
+    
     public void mover2(){
         listita.mover2();
         listita.mostrarLIF();
@@ -72,6 +81,11 @@ public class Server extends javax.swing.JFrame {
         }
     
     }
+    
+    /**
+     * Este metodo permite al jugador 1 retroceder de casilla
+     */
+    
     public void retroceder1(){
         listita.retroceder1();
         listita.mostrarLIF();
@@ -88,6 +102,10 @@ public class Server extends javax.swing.JFrame {
             
         }
     }
+    
+    /**
+     * Este metodo permite al jugador 2 retroceder de casilla
+     */
     
     public void retroceder2(){
         listita.retroceder2();
@@ -107,12 +125,17 @@ public class Server extends javax.swing.JFrame {
     }
     NodoDoble auxi1 = listita.inicio;
     
+    /**
+     * En este metodo se encuentra la logica del juego, especificamente, las acciones que debe realizar el jugador dependiendo si su casilla es de reto, tunel o trampa.
+     * @param jugador es el jugador al que afectara la accion, dependiendo de la casilla donde cayo.
+     */
+    
     public void logica1(String jugador) {//Este metodo se va a encargar de realizar la parte logica de las casillas reto, tunel y trampa
         Random t = new Random();
         int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
         System.out.println("Valor del dado:  "+ valorDado2);
         
-        
+        //Realiza los movimientos del jugador, dependiendo el valor del dado que haya salido.
         while (valorDado2>0 ){
             if(jugador == "jugador1"){
                 mover1();
@@ -125,6 +148,8 @@ public class Server extends javax.swing.JFrame {
             }
             
         }
+        
+        //Se realiza si algun jugador cae en la casilla de reto, permite que un jugador le envie un reto matematico aleatorio al otro.
         if(auxi1.tipo == "Reto" && jugador== "jugador1"){
             int op1 = t.nextInt(50)+1;
             int op2 = t.nextInt(50)+1;
@@ -185,6 +210,8 @@ public class Server extends javax.swing.JFrame {
                 }
             }    
         }
+        
+        //Se realiza si un jugador cae en una casilla de trampa, hace que el jugador retroceda una cantidad aleatoria de casillas.
         if(auxi1.tipo == "Trampa" && jugador == "jugador1"){
             int r = t.nextInt(3)+1;
             if(r == 1){
@@ -199,6 +226,7 @@ public class Server extends javax.swing.JFrame {
             }
         }
         
+        //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
         if(auxi1.tipo == "Túnel" && jugador == "jugador1"){
             int a = t.nextInt(3)+1;
             if(a ==1){
@@ -215,12 +243,13 @@ public class Server extends javax.swing.JFrame {
     }
     
     
-    
-    
-    
+    /**
+     * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, ademas de la creacion de las casillas y algunos de sus metodos.  
+     */  
     
     
     public Server() {
+        //Aqui se realiza la conexion que permite recibir del cliente, además de agregar las casillas y colocarlas aleatoriamente.
         try {
             initComponents();
             ss = new ServerSocket(8080);
@@ -249,11 +278,14 @@ public class Server extends javax.swing.JFrame {
             listita.inicio.jugador1 = true;
             listita.inicio.jugador2 = true;           
             NodoDoble aux = listita.inicio.siguiente;
+            
+            //Se programa la aleatoriedad de las casillas
             while(contador>0){
                 Random r = new Random();
                 int valorDado = r.nextInt(9)+1;  // Entre 0 y 5, más 1.
                 System.out.println(valorDado);
-                                
+
+                //Coloca de manera aleatoria las casillas de reto.
                 if (valorDado == 3 && reto != 0 || valorDado == 6 && reto != 0 || valorDado == 9 && reto != 0){
                     aux.pan.setText("Reto");
                     aux.tipo = "Reto";
@@ -261,6 +293,8 @@ public class Server extends javax.swing.JFrame {
                     aux = aux.siguiente;
                     contador--;
                     reto--;
+                    
+                //Coloca de manera aleatoria las casillas de trampa.
                 } else if (valorDado == 2 && trampa != 0 || valorDado == 5 && trampa != 0 || valorDado == 8 && trampa != 0) {  
                     aux.pan.setText("Trampa");
                     aux.tipo = "Trampa";
@@ -268,6 +302,8 @@ public class Server extends javax.swing.JFrame {
                     aux = aux.siguiente;
                     contador--;
                     trampa--;
+                    
+                //Coloca de manera aleatoria las casillas de tunel.
                 } else if(valorDado == 1 && tunel != 0 || valorDado == 4 && tunel != 0 || valorDado == 7 && tunel != 0) {  
                     aux.pan.setText("Túnel");
                     aux.tipo = "Túnel";
@@ -292,7 +328,7 @@ public class Server extends javax.swing.JFrame {
     }
     
     /**
-     * Esta clase es para aceptar a diferentes clientes
+     * Esta clase permite aceptar a diferentes clientes.
      */
     class ClientAccept extends Thread {
         public void run() {
@@ -532,9 +568,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Documents\\NetBeansProjects\\Math-Sockets-master\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Documents\\NetBeansProjects\\Math-Sockets-master\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

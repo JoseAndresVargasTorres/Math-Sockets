@@ -17,7 +17,8 @@ import java.util.Arrays;
 /**
  * Esta clase es para crear cada cliente y proporciona la interfaz gráfica del chat
  *
- * @author Kendall Marín Muñoz
+ * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
+ * 
  */
 public class Micliente extends javax.swing.JFrame {
     String iD, clientID = "";
@@ -34,7 +35,9 @@ public class Micliente extends javax.swing.JFrame {
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
     
-    
+    /**
+     * Metodo que permite mover al jugador de posicion
+     */
     public void mover1(){
         if (cont == 0){            
             p1y += 76;
