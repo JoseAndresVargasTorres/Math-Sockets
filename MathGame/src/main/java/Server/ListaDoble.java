@@ -35,21 +35,26 @@ public class ListaDoble {
         aux.jugador2 = false;
         }
     
-    /*
-    //Método propio para mover el jugador de nodo
-    public void moverj1(){
-        NodoDoble aux = inicio;
-        if(inicio == null){
-            return;           
-        }
-        if(aux.jugador1 && aux.siguiente != null){            
-            aux.siguiente.jugador1 = true;
-            aux.jugador1 = false;
-            aux = aux.siguiente;
-        }else{
-            aux.jugador1 = false;
-        }        
-    }*/
+    //Metodo para retroceder en la lista 
+    public void retroceder1(){
+           NodoDoble aux = fin;
+           while(!aux.jugador1){
+               aux = aux.anterior;        
+       }
+           aux.anterior.jugador1 = true;
+           aux.jugador1 = false;                
+       }
+    
+    public void retroceder2(){
+        NodoDoble aux = fin;
+        while(!aux.jugador2){
+            aux = aux.anterior;        
+    }
+        aux.anterior.jugador2 = true;
+        aux.jugador2 = false;                
+    }   
+    
+    
 
     // Método para agregar nodos al final
     public void agregarAlFinal(String casilla, javax.swing.JTextPane panel, boolean isjugador1, boolean isjugador2) {
