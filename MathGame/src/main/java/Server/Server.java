@@ -13,11 +13,12 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.*;
 
 /**
  * Esta clase es para crear un servidor con interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz
+ * @author Kendall Marín Muñoz,Carlos Contreras, Jose Andres Vargas Torres
  */
 public class Server extends javax.swing.JFrame {
     ServerSocket ss;
@@ -27,31 +28,31 @@ public class Server extends javax.swing.JFrame {
      */
     int p1x = 55;
     int p1x2 = 106;
-    int p1y = 125;
-    int p2y = 125;
+    int p1y1 = 125;
+    int p1y2 = 125;
     int cont = 3;
     int cont2 = 3;
     int movex1 = 105;
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
+    
     public void mover1(){
         listita.mover1();
         listita.mostrarLIF();
         if (cont == 0){            
-            p1y += 76;
-            this.p1.setLocation(p1x,p1y);
+            p1y1 += 76;
+            this.p1.setLocation(p1x,p1y1);
             cont = 3;
-            movex1 *= -1; 
-            if (listita.fin.jugador1 == true){
-                JOptionPane.showMessageDialog(null, "Ganaste!", "Felicidades!", JOptionPane.INFORMATION_MESSAGE);
-            }
+            movex1 *= -1;            
         }else{
             System.out.println(cont);
             p1x += movex1;
-            this.p1.setLocation(p1x,p1y);
+            this.p1.setLocation(p1x,p1y1);
             cont--;
-            if (listita.fin.jugador1 == true){
-                JOptionPane.showMessageDialog(null, "Ganaste!", "Felicidades!", JOptionPane.INFORMATION_MESSAGE);
+            if(listita.fin.jugador1 ==true){
+                
+                JOptionPane.showMessageDialog(null, "Felicidades", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
+                
             }
         }
     }
@@ -59,23 +60,166 @@ public class Server extends javax.swing.JFrame {
         listita.mover2();
         listita.mostrarLIF();
         if (cont2 == 0){
-            p2y += 76;
-            this.p2.setLocation(p1x2,p2y);
+            p1y2 += 76;
+            this.p2.setLocation(p1x2,p1y2);
             cont2 = 3;
             movex2 *= -1;
-            if (listita.fin.jugador2 == true){
-                JOptionPane.showMessageDialog(null, "Perdiste! :c", "Ganó el jugador 2!", JOptionPane.INFORMATION_MESSAGE);
-            }
         }else{
             System.out.println(cont2);
             p1x2 += movex2;
-            this.p2.setLocation(p1x2,p2y);
+            this.p2.setLocation(p1x2,p1y2);
             cont2--;
-            if (listita.fin.jugador2 == true){
-                JOptionPane.showMessageDialog(null, "Perdiste! :c", "Ganó el jugador 2!", JOptionPane.INFORMATION_MESSAGE);
+        }
+    
+    }
+    public void retroceder1(){
+        listita.retroceder1();
+        listita.mostrarLIF();
+        if (cont == 3){            
+            p1y1 -= 76;
+            this.p1.setLocation(p1x,p1y1);
+            cont = 0;
+            movex1 *= -1;            
+        }else{
+            System.out.println("mover1_contador_re: " + cont);
+            p1x -= movex1;
+            this.p1.setLocation(p1x,p1y1);
+            cont++;
+            
+        }
+    }
+    
+    public void retroceder2(){
+        listita.retroceder2();
+        listita.mostrarLIF();
+        if (cont2 == 3){            
+            p1y2 -= 76;
+            this.p2.setLocation(p1x2,p1y2);
+            cont2 = 0;
+            movex2 *= -1;            
+        }else{
+            System.out.println("mover1_contador_re: " + cont);
+            p1x2 -= movex2;
+            this.p2.setLocation(p1x2,p1y2);
+            cont2++;
+            
+        }
+    }
+    NodoDoble auxi1 = listita.inicio;
+    
+    public void logica1(String jugador) {//Este metodo se va a encargar de realizar la parte logica de las casillas reto, tunel y trampa
+        Random t = new Random();
+        int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
+        System.out.println("Valor del dado:  "+ valorDado2);
+        
+        
+        while (valorDado2>0 ){
+            if(jugador == "jugador1"){
+                mover1();
+                auxi1 = auxi1.siguiente;
+                valorDado2--;
+            }else{
+                mover2();
+                auxi1 = auxi1.siguiente;
+                valorDado2--;
+            }
+            
+        }
+        if(auxi1.tipo == "Reto" && jugador== "jugador1"){
+            int op1 = t.nextInt(50)+1;
+            int op2 = t.nextInt(50)+1;
+            int operando = t.nextInt(4)+1;
+            
+            if(operando == 1){
+                int resultado1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ op1 +" + "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                if(resultado1 == op1 + op2){
+                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                    listita.mover1();
+                    listita.mover2();                  
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                    listita.mover1();
+                    //listita.mover2();
+                }
+            }
+               
+            if(operando == 2){
+                int resultado2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ op1 +" - "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                if(resultado2 == op1 - op2){
+                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                    listita.mover1();
+                    listita.mover2();                  
+
+                }else{
+                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                //listita.mover2();
+                }
+            }
+            if(operando == 3){
+                int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ op1 +" * "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                if(resultado3 == op1 * op2){
+                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                    listita.mover1();
+                    listita.mover2();                  
+
+                }else{
+                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                //listita.mover2();
+                
+                }
+            }
+            if(operando == 4){
+                int resultado4 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ op1 +" ÷ "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                if(resultado4 == op1 / op2){
+                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                    listita.mover1();
+                    listita.mover2();                  
+
+                }else{
+                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                //listita.mover2();
+                }
+            }    
+        }
+        if(auxi1.tipo == "Trampa" && jugador == "jugador1"){
+            int r = t.nextInt(3)+1;
+            if(r == 1){
+                retroceder1();                
+            }else if(r == 2){
+                retroceder1();
+                retroceder1();
+            }else if(r == 3){
+                retroceder1();
+                retroceder1();
+                retroceder1();
+            }
+        }
+        
+        if(auxi1.tipo == "Túnel" && jugador == "jugador1"){
+            int a = t.nextInt(3)+1;
+            if(a ==1){
+                mover1();               
+            }else if(a == 2){
+                mover1();
+                mover1();               
+            }else if(a == 3){
+                mover1();               
+                mover1();               
+                mover1();               
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
     public Server() {
         try {
             initComponents();
@@ -135,12 +279,13 @@ public class Server extends javax.swing.JFrame {
             }            
             this.Panel16.setEditable(false);
             this.Panel16.setText("Final");            
-            this.p2.setLocation(104,125);
-            this.p1.setLocation(55,125);
+            this.p2.setLocation(104,115);
+            this.p1.setLocation(55,115);
             getContentPane().setComponentZOrder(this.p1, 0);
             getContentPane().setComponentZOrder(this.p2, 0);
             new ClientAccept().start();
             listita.mostrarLIF();  
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -334,6 +479,7 @@ public class Server extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
+        setResizable(false);
 
         Panel16.setFocusable(false);
         jScrollPane2.setViewportView(Panel16);
@@ -386,9 +532,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Proyecto1Test\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Proyecto1Test\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -465,7 +611,7 @@ public class Server extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(JP2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
