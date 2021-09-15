@@ -152,7 +152,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="JP2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="8" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="p2" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="p1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -515,8 +515,18 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JLabel" name="p2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\Images\ganon.png"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="p1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\Images\link.png"/>
+            </Property>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>

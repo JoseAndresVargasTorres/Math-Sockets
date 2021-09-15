@@ -25,10 +25,10 @@ public class Micliente extends javax.swing.JFrame {
     DataInputStream din;
     DataOutputStream dout;
     DefaultListModel dlm;
-    int p1x = 55;
+    int p1x = 20;
     int p1x2 = 106;
-    int p1y = 125;
-    int p2y = 125;
+    int p1y = 205;
+    int p2y = 205;
     int cont = 3;
     int cont2 = 3;
     int movex1 = 105;
@@ -92,6 +92,10 @@ public class Micliente extends javax.swing.JFrame {
             idlabel.setText(i);
             din = new DataInputStream(s.getInputStream());
             dout = new DataOutputStream(s.getOutputStream());
+            this.p1.setLocation(20,205);
+            this.p2.setLocation(69,205);
+            getContentPane().setComponentZOrder(this.p1, 0);
+            getContentPane().setComponentZOrder(this.p2, 0);
             new Read().start();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -312,9 +316,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Proyecto1Test\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Proyecto1Test\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -420,7 +424,7 @@ public class Micliente extends javax.swing.JFrame {
                             .addComponent(jButton1))
                         .addGap(19, 19, 19)
                         .addComponent(JP2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(p2)
                             .addComponent(p1))
