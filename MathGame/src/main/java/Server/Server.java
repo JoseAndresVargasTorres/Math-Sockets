@@ -35,7 +35,7 @@ public class Server extends javax.swing.JFrame {
     int movex1 = 105;
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
-    
+    NodoDoble auxi1 ; 
     /**
      * Este metodo permite mover al jugador 1 de casilla
      */
@@ -123,7 +123,7 @@ public class Server extends javax.swing.JFrame {
             
         }
     }
-    NodoDoble auxi1 = listita.inicio;
+    
     
     /**
      * En este metodo se encuentra la logica del juego, especificamente, las acciones que debe realizar el jugador dependiendo si su casilla es de reto, tunel o trampa.
@@ -131,85 +131,100 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void Dadooficial(String jugador) {//Este metodo se va a encargar de realizar la parte logica de las casillas reto, tunel y trampa
-        Random t = new Random();
-        int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
-        System.out.println("Valor del dado:  "+ valorDado2);
         
+        int valorDado2 = 2;
+        //int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
+        System.out.println("Valor del dado:  "+ valorDado2);
+        //System.out.println(auxi1);
         //Realiza los movimientos del jugador, dependiendo el valor del dado que haya salido.
         while (valorDado2>0 ){
             if(jugador == "jugador1"){
                 mover1();
-                auxi1 = auxi1.siguiente;
+                
                 valorDado2--;
             }else{
                 mover2();
-                auxi1 = auxi1.siguiente;
+                
                 valorDado2--;
             }
             
         }
-        /*
-        //Se realiza si algun jugador cae en la casilla de reto, permite que un jugador le envie un reto matematico aleatorio al otro.
-        if(auxi1.tipo == "Reto" && jugador== "jugador1"){
-            int op1 = t.nextInt(50)+1;
-            int op2 = t.nextInt(50)+1;
-            int operando = t.nextInt(4)+1;
-            
-            if(operando == 1){
-                int resultado1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ op1 +" + "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                if(resultado1 == op1 + op2){
-                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                    listita.mover1();
-                    listita.mover2();                  
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                    listita.mover1();
-                    //listita.mover2();
-                }
-            }
-               
-            if(operando == 2){
-                int resultado2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ op1 +" - "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                if(resultado2 == op1 - op2){
-                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                    listita.mover1();
-                    listita.mover2();                  
+    } 
+    /*public void Partelogica(String jugador){
+        Random t = new Random();
+        
+        //System.out.println("******************************************");
+        //System.out.println(auxi1.jugador1); 
 
-                }else{
+        if(auxi1.tipo == "Reto" && jugador== "jugador1" ){
+        System.out.println("funca");
+        int op1 = t.nextInt(50)+1;
+        int op2 = t.nextInt(50)+1;
+        int operando = t.nextInt(4)+1;
+
+        if(operando == 1){
+            int resultado1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ op1 +" + "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+            if(resultado1 == op1 + op2){
+                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                listita.mover2();                  
+
+            }else{
                 JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                 listita.mover1();
                 //listita.mover2();
-                }
             }
-            if(operando == 3){
-                int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ op1 +" * "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                if(resultado3 == op1 * op2){
-                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                    listita.mover1();
-                    listita.mover2();                  
-
-                }else{
-                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                //listita.mover2();
-                
-                }
-            }
-            if(operando == 4){
-                int resultado4 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ op1 +" ÷ "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                if(resultado4 == op1 / op2){
-                    JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                    listita.mover1();
-                    listita.mover2();                  
-
-                }else{
-                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                //listita.mover2();
-                }
-            }    
         }
+
+        if(operando == 2){
+            int resultado2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ op1 +" - "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+            if(resultado2 == op1 - op2){
+                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                listita.mover2();                  
+
+            }else{
+            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+            listita.mover1();
+            //listita.mover2();
+            }
+        }
+        if(operando == 3){
+            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ op1 +" * "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+            if(resultado3 == op1 * op2){
+                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                listita.mover2();                  
+
+            }else{
+            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+            listita.mover1();
+            //listita.mover2();
+
+            }
+        }
+        if(operando == 4){
+            int resultado4 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ op1 +" ÷ "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+            if(resultado4 == op1 / op2){
+                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                listita.mover1();
+                listita.mover2();                  
+
+            }else{
+            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+            listita.mover1();
+            //listita.mover2();
+            }
+        }    
+    }else{
+        return;
+    }
+            
+            
+        
+        //Se realiza si algun jugador cae en la casilla de reto, permite que un jugador le envie un reto matematico aleatorio al otro.
+       
+        /*
         
         //Se realiza si un jugador cae en una casilla de trampa, hace que el jugador retroceda una cantidad aleatoria de casillas.
         if(auxi1.tipo == "Trampa" && jugador == "jugador1"){
@@ -240,9 +255,11 @@ public class Server extends javax.swing.JFrame {
                 mover1();               
             }
         }
-        */
+        
+            
     }
     
+    */
     
     /**
      * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, ademas de la creacion de las casillas y algunos de sus metodos.  
@@ -260,6 +277,7 @@ public class Server extends javax.swing.JFrame {
             int reto = 7;
             int trampa = 4;
             int tunel = 3;
+            
             listita.agregarAlInicio("Inicio", Panel1, true, true);            
             listita.agregarAlFinal("Error", Panel2, false, false);
             listita.agregarAlFinal("Error", Panel3, false, false);            
@@ -279,12 +297,13 @@ public class Server extends javax.swing.JFrame {
             listita.inicio.jugador1 = true;
             listita.inicio.jugador2 = true;           
             NodoDoble aux = listita.inicio.siguiente;
+            auxi1 = listita.inicio;
             
             //Se programa la aleatoriedad de las casillas
             while(contador>0){
                 Random r = new Random();
                 int valorDado = r.nextInt(9)+1;  // Entre 0 y 5, más 1.
-                System.out.println(valorDado);
+                //System.out.println(valorDado);
 
                 //Coloca de manera aleatoria las casillas de reto.
                 if (valorDado == 3 && reto != 0 || valorDado == 6 && reto != 0 || valorDado == 9 && reto != 0){
@@ -313,7 +332,16 @@ public class Server extends javax.swing.JFrame {
                     contador--;
                     tunel--;
                 }                                                          
-            }            
+            }
+            //Para implementar los metodos de reto, tunel y 
+            
+                
+            
+            
+           
+        
+        //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
+        
             this.Panel16.setEditable(false);
             this.Panel16.setText("Final");            
             this.p2.setLocation(104,115);
@@ -321,7 +349,9 @@ public class Server extends javax.swing.JFrame {
             getContentPane().setComponentZOrder(this.p1, 0);
             getContentPane().setComponentZOrder(this.p2, 0);
             new ClientAccept().start();
-            listita.mostrarLIF();  
+            listita.mostrarLIF();
+            System.out.println("-----------------------------------------------");
+            
             
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -517,7 +547,10 @@ public class Server extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
+        setFocusable(false);
         setResizable(false);
+
+        jPanel1.setFocusable(false);
 
         Panel16.setFocusable(false);
         jScrollPane2.setViewportView(Panel16);
