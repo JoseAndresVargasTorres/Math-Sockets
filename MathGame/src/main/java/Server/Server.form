@@ -97,6 +97,8 @@
                           <Component id="p1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                           <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="Dado_numero" min="-2" pref="51" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -108,9 +110,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Dado_numero" alignment="3" pref="30" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                           <Component id="JP2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="11" max="32767" attributes="0"/>
                       </Group>
@@ -412,14 +417,14 @@
         <Component class="javax.swing.JLabel" name="p2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\Images\ganon.png"/>
+              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\img\ganon.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="p1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\Images\link.png"/>
+              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\img\link.png"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -449,6 +454,11 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="Dado_numero">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

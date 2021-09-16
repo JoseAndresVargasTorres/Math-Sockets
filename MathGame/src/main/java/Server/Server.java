@@ -35,30 +35,36 @@ public class Server extends javax.swing.JFrame {
     int movex1 = 105;
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
-    NodoDoble auxi1 ; 
+    NodoDoble auxi1 ;
     /**
      * Este metodo permite mover al jugador 1 de casilla
      */
     
     public void mover1(){
+        
         listita.mover1();
         listita.mostrarLIF();
+        
         if (cont == 0){            
             p1y1 += 76;
             this.p1.setLocation(p1x,p1y1);
+            
             cont = 3;
             movex1 *= -1;            
         }else{
             System.out.println(cont);
             p1x += movex1;
             this.p1.setLocation(p1x,p1y1);
+            
             cont--;
             if(listita.fin.jugador1 ==true){
                 
                 JOptionPane.showMessageDialog(null, "Felicidades", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
                 
             }
-        }
+    }
+       
+        
     }
     
     /**
@@ -116,7 +122,7 @@ public class Server extends javax.swing.JFrame {
             cont2 = 0;
             movex2 *= -1;            
         }else{
-            System.out.println("mover1_contador_re: " + cont);
+            //System.out.println("mover1_contador_re: " + cont);
             p1x2 -= movex2;
             this.p2.setLocation(p1x2,p1y2);
             cont2++;
@@ -130,33 +136,93 @@ public class Server extends javax.swing.JFrame {
      * @param jugador es el jugador al que afectara la accion, dependiendo de la casilla donde cayo.
      */
     
-    public void Dadooficial(String jugador) {//Este metodo se va a encargar de realizar la parte logica de las casillas reto, tunel y trampa
+    public void Dadooficial() {//Este metodo se va a encargar de realizar la parte logica de las casillas reto, tunel y trampa
+        auxi1 = listita.inicio;
+        Random t = new Random();
+        int valorDado2 = t.nextInt(4)+1;
+        String numero_dado = Integer.toString(valorDado2);
+        this.Dado_numero.setText(numero_dado);
         
-        int valorDado2 = 2;
-        //int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
-        System.out.println("Valor del dado:  "+ valorDado2);
-        //System.out.println(auxi1);
-        //Realiza los movimientos del jugador, dependiendo el valor del dado que haya salido.
-        while (valorDado2>0 ){
-            if(jugador == "jugador1"){
+        while(auxi1.jugador1==false && auxi1.tipo != "Final" ){
+           auxi1 = auxi1.siguiente;
+           
+        }
+        
+        while (valorDado2>0 ) {
+            if( auxi1.siguiente !=null && auxi1.tipo != "Final"  ){
+                
                 mover1();
                 
-                valorDado2--;
-            }else{
-                mover2();
                 
                 valorDado2--;
             }
             
         }
-    } 
-    /*public void Partelogica(String jugador){
-        Random t = new Random();
         
+        
+        
+       while(auxi1.jugador1==false && auxi1.tipo != "Final"  ){
+           auxi1 = auxi1.siguiente;
+           
+       }
+       
+         // Entre 0 y 5, más 1.
+        //System.out.println("Valor del dado:  "+ valorDado2);
+        
+        
+        System.out.println("////////////////////////////////////////////////");
+        System.out.println(auxi1.tipo);
+        System.out.println("//////////////////////////////////////////////");
+        
+        if(auxi1.tipo == "Trampa" && auxi1.jugador1== true /*&& jugador == "jugador1"*/){
+            
+            int r = t.nextInt(3)+1;
+            String numero_casillas1 =  Integer.toString(r);
+            JOptionPane.showMessageDialog(null, "Te devuelves "+ numero_casillas1+  " casilla(s)", "Trampa", JOptionPane.INFORMATION_MESSAGE);
+            while(r>0 && auxi1.anterior != null){
+                retroceder1();
+                
+                
+                r--;
+            
+            
+        
+            }
+        
+        //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
+        if(auxi1.tipo == "Túnel" && auxi1.jugador1 == true/*&& jugador == "jugador1"*/){
+            int a = t.nextInt(3)+1;
+            String numero_casillas2 =  Integer.toString(a);
+            JOptionPane.showMessageDialog(null, "Te mueves "+ numero_casillas2+  " casilla(s) hacia adelante", "Túnel", JOptionPane.INFORMATION_MESSAGE);
+            while(a>0 && auxi1.siguiente != null){
+                mover1();
+                
+                a--;
+            }
+            
+            
+        }
+    }
+        
+        
+    
+    
+}
+                
+   
+            
+        
+              
+    
+    //public void Partelogica(String jugador){
+        
+        
+            
+    //}
         //System.out.println("******************************************");
         //System.out.println(auxi1.jugador1); 
 
-        if(auxi1.tipo == "Reto" && jugador== "jugador1" ){
+        /*if(auxi1.tipo == "Reto" && jugador== "jugador1" ){
         System.out.println("funca");
         int op1 = t.nextInt(50)+1;
         int op2 = t.nextInt(50)+1;
@@ -221,51 +287,21 @@ public class Server extends javax.swing.JFrame {
     }
             
             
-        
+        */
         //Se realiza si algun jugador cae en la casilla de reto, permite que un jugador le envie un reto matematico aleatorio al otro.
        
-        /*
+        
         
         //Se realiza si un jugador cae en una casilla de trampa, hace que el jugador retroceda una cantidad aleatoria de casillas.
-        if(auxi1.tipo == "Trampa" && jugador == "jugador1"){
-            int r = t.nextInt(3)+1;
-            if(r == 1){
-                retroceder1();                
-            }else if(r == 2){
-                retroceder1();
-                retroceder1();
-            }else if(r == 3){
-                retroceder1();
-                retroceder1();
-                retroceder1();
-            }
-        }
         
-        //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
-        if(auxi1.tipo == "Túnel" && jugador == "jugador1"){
-            int a = t.nextInt(3)+1;
-            if(a ==1){
-                mover1();               
-            }else if(a == 2){
-                mover1();
-                mover1();               
-            }else if(a == 3){
-                mover1();               
-                mover1();               
-                mover1();               
-            }
-        }
-        
-            
-    }
     
-    */
+    
     
     /**
      * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, ademas de la creacion de las casillas y algunos de sus metodos.  
      */  
-    
-    
+
+
     public Server() {
         //Aqui se realiza la conexion que permite recibir del cliente, además de agregar las casillas y colocarlas aleatoriamente.
         try {
@@ -297,7 +333,7 @@ public class Server extends javax.swing.JFrame {
             listita.inicio.jugador1 = true;
             listita.inicio.jugador2 = true;           
             NodoDoble aux = listita.inicio.siguiente;
-            auxi1 = listita.inicio;
+            
             
             //Se programa la aleatoriedad de las casillas
             while(contador>0){
@@ -333,7 +369,7 @@ public class Server extends javax.swing.JFrame {
                     tunel--;
                 }                                                          
             }
-            //Para implementar los metodos de reto, tunel y 
+            
             
                 
             
@@ -341,7 +377,7 @@ public class Server extends javax.swing.JFrame {
            
         
         //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
-        
+            this.Dado_numero.setEditable(false);
             this.Panel16.setEditable(false);
             this.Panel16.setText("Final");            
             this.p2.setLocation(104,115);
@@ -544,6 +580,7 @@ public class Server extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        Dado_numero = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
@@ -603,9 +640,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -627,6 +664,8 @@ public class Server extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        Dado_numero.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -676,6 +715,8 @@ public class Server extends javax.swing.JFrame {
                         .addComponent(p1)
                         .addGap(148, 148, 148)
                         .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(Dado_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -683,9 +724,11 @@ public class Server extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(Dado_numero, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                        .addGap(9, 9, 9)
                         .addComponent(JP2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -760,7 +803,7 @@ public class Server extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Dadooficial("jugador1");
+        Dadooficial();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -799,6 +842,7 @@ public class Server extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Dado_numero;
     private javax.swing.JLabel JP2;
     private javax.swing.JTextPane Panel1;
     private javax.swing.JTextPane Panel10;
