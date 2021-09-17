@@ -12,6 +12,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Random;
 
 
 /**
@@ -39,6 +40,19 @@ public class Micliente extends javax.swing.JFrame {
      * Metodo que permite mover al jugador de posicion
      */
     public void mover1(){
+        if (cont == 0){            
+            p1y += 76;
+            this.p1.setLocation(p1x,p1y);
+            cont = 3;
+            movex1 *= -1; 
+        } else {
+            System.out.println(cont);
+            p1x += movex1;
+            this.p1.setLocation(p1x,p1y);
+            cont--;
+            }
+    }
+    public void reto(){
         if (cont == 0){            
             p1y += 76;
             this.p1.setLocation(p1x,p1y);
@@ -167,7 +181,10 @@ public class Micliente extends javax.swing.JFrame {
                         aux = aux.siguiente;  
                     } else if (test.get(0).equals("15")) {
                         aux.pan.setText(test.get(1));
-                        aux = aux.siguiente;  
+                        aux = listita.inicio;  
+                    } else if (m.equals("reto")) {
+                        mover1();
+                        
                 }
 
                 } catch (Exception ex) {
@@ -316,9 +333,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -510,12 +527,18 @@ public class Micliente extends javax.swing.JFrame {
                 m = "#4344554@@@@@67667@@" + CI + ":" + mm;
                 dout.writeUTF(m);
                 msgText.setText("");
+                
+            } else if (m.equals("reto")) {
+                dout.writeUTF(m);
+                msgText.setText("");
+                        
+            
             } else {
                 dout.writeUTF(m);
                 msgText.setText("");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "El usuario ya no está.");
+            JOptionPane.showMessageDialog(this, "WTF");
         }
     }//GEN-LAST:event_enviar
 

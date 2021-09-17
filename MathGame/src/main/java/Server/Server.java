@@ -23,6 +23,9 @@ import javax.swing.*;
 public class Server extends javax.swing.JFrame {
     ServerSocket ss;
     HashMap clientColl = new HashMap();
+    DataInputStream din;
+    DataOutputStream dout;
+    DefaultListModel dlm;
     /**
      * Aqui se encuneran los metodos y atributos de utilizados en la clase server
      */
@@ -35,7 +38,9 @@ public class Server extends javax.swing.JFrame {
     int movex1 = 105;
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
-    NodoDoble auxi1 ; 
+    NodoDoble auxi1 ;
+    NodoDoble aux2;
+    NodoDoble aux3;
     /**
      * Este metodo permite mover al jugador 1 de casilla
      */
@@ -129,27 +134,7 @@ public class Server extends javax.swing.JFrame {
      * En este metodo se encuentra la logica del juego, especificamente, las acciones que debe realizar el jugador dependiendo si su casilla es de reto, tunel o trampa.
      * @param jugador es el jugador al que afectara la accion, dependiendo de la casilla donde cayo.
      */
-    
-    public void Dadooficial(String jugador) {//Este metodo se va a encargar de realizar la parte logica de las casillas reto, tunel y trampa
-        
-        int valorDado2 = 2;
-        //int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
-        System.out.println("Valor del dado:  "+ valorDado2);
-        //System.out.println(auxi1);
-        //Realiza los movimientos del jugador, dependiendo el valor del dado que haya salido.
-        while (valorDado2>0 ){
-            if(jugador == "jugador1"){
-                mover1();
-                
-                valorDado2--;
-            }else{
-                mover2();
-                
-                valorDado2--;
-            }
-            
-        }
-    } 
+
     /*public void Partelogica(String jugador){
         Random t = new Random();
         
@@ -266,11 +251,20 @@ public class Server extends javax.swing.JFrame {
      */  
     
     
-    public Server() {
+    public Server() { initComponents();
         //Aqui se realiza la conexion que permite recibir del cliente, además de agregar las casillas y colocarlas aleatoriamente.
+        
+    }
+    Server(String jugador1){
         try {
             initComponents();
             ss = new ServerSocket(8080);
+            Socket s = ss.accept();
+            din = new DataInputStream(s.getInputStream());
+            dout = new DataOutputStream(s.getOutputStream());
+            String i = new DataInputStream(s.getInputStream()).readUTF();
+            this.JP1.setText("Bienvenido: "+jugador1);
+            this.JP2.setText(i+" joined!");
             this.Panel1.setEditable(false);
             this.Panel1.setText("Inicio");
             int contador = 14;
@@ -348,8 +342,10 @@ public class Server extends javax.swing.JFrame {
             this.p1.setLocation(55,115);
             getContentPane().setComponentZOrder(this.p1, 0);
             getContentPane().setComponentZOrder(this.p2, 0);
-            new ClientAccept().start();
+            new MsgRead(s, i).start();
             listita.mostrarLIF();
+            aux2 = listita.inicio;
+            aux3 = listita.inicio;
             System.out.println("-----------------------------------------------");
             
             
@@ -357,33 +353,7 @@ public class Server extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
-    /**
-     * Esta clase permite aceptar a diferentes clientes.
-     */
-    class ClientAccept extends Thread {
-        public void run() {
-            while (true) {
-                try {
-                    Socket s = ss.accept();
-                    String i = new DataInputStream(s.getInputStream()).readUTF();
-                    if (clientColl.containsKey(i)) {
-                        DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-                        dout.writeUTF("Ya estas registrado!");
-                    } else {
-                        clientColl.put(i, s);
-                        JP2.setText(i + " Joined!\n");
-                        DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-                        dout.writeUTF("");
-                        new MsgRead(s, i).start();
-                        new PrepareClientList().start();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-    }
+
     /**
      * Esta clase es para leer y mostrar los diferentes mensajes enviados por los
      * clientes, además detecta si se solicita un monto
@@ -399,6 +369,28 @@ public class Server extends javax.swing.JFrame {
         MsgRead(Socket s, String ID) {
             this.s = s;
             this.ID = ID;
+        }
+        public void Dadooficial() {
+            int valorDado2 = 2;
+            //int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
+            System.out.println("Valor del dado:  "+ valorDado2);
+            //System.out.println(auxi1);
+            //Realiza los movimientos del jugador, dependiendo el valor del dado que haya salido.
+            while (valorDado2>0 ){
+                    mover1();
+                    valorDado2--;
+                } 
+            NodoDoble aux = listita.inicio;
+            while (aux.jugador1 == false){
+                aux = aux.siguiente;
+            }
+            if (aux.tipo.equals("Reto")){
+                try {
+                    new DataOutputStream(s.getOutputStream()).writeUTF("Reto");
+                } catch (IOException ex) {
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         /**
          * Este método se encarga de recibir los paquetes de datos (mensajes)
@@ -421,14 +413,27 @@ public class Server extends javax.swing.JFrame {
                 
                 
             }
-            while (!clientColl.isEmpty()) {
+            while (true) {
                 try {
                     String i = new DataInputStream(s.getInputStream()).readUTF();
                     if (i.equals("mover1")){ //Este if separa una solicitud de monto de un mensaje normal
-                        mover1();
                         new DataOutputStream(s.getOutputStream()).writeUTF(i);
+                        mover1();
+                        
                         
                     } else if (i.contains("#4344554@@@@@67667@@")) {
+                        i = i.substring(20);
+                        StringTokenizer st = new StringTokenizer(i, ":");
+                        String id = st.nextToken();
+                        i = st.nextToken();
+                        try {
+                            new DataOutputStream(((Socket) clientColl.get(id)).getOutputStream()).writeUTF("< " + ID + " para tí > " + i);
+                        } catch (Exception ex) {
+                            clientColl.remove(id);
+                            JP2.setText(id + ": salió!");
+
+                        }
+                    } else if (i.equals("Reto")) {
                         i = i.substring(20);
                         StringTokenizer st = new StringTokenizer(i, ":");
                         String id = st.nextToken();
@@ -460,7 +465,9 @@ public class Server extends javax.swing.JFrame {
                     ex.printStackTrace();
                 }
             }
+        
         }
+        
     }
     
     /**
@@ -543,7 +550,8 @@ public class Server extends javax.swing.JFrame {
         p1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        JP1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
@@ -603,9 +611,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -621,12 +629,15 @@ public class Server extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("DADO");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setText("Dado");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
+
+        JP1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JP1.setText("...................");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -638,15 +649,15 @@ public class Server extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 38, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,42 +676,44 @@ public class Server extends javax.swing.JFrame {
                                     .addComponent(jScrollPane17, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(JP2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton2)))
                         .addGap(44, 44, 44))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(JP1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(p2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(p1)
-                        .addGap(148, 148, 148)
-                        .addComponent(jButton3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JP2)
+                        .addGap(35, 35, 35))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(JP2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(p2)
                                     .addComponent(p1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 6, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2)))
-                        .addGap(6, 6, 6)))
+                                .addComponent(JP1)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(JP2)
+                        .addGap(36, 36, 36)))
+                .addGap(6, 6, 6)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -734,7 +747,9 @@ public class Server extends javax.swing.JFrame {
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(58, 58, 58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -752,53 +767,61 @@ public class Server extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        mover1();
+        if (aux2.siguiente!=null){
+            mover1();
+            aux2 = aux2.siguiente;
+
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        mover2();
+        if (aux3.siguiente!=null){
+            mover2();
+            aux3 = aux3.siguiente;
+
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Dadooficial("jugador1");
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            // Que el dado haga la función de mover el jugador en ambas ventanas se desactiva
+            String m = "reto";
+
+            if (m.equals("reto")) {
+                dout.writeUTF("mover1");
+                mover1();   // Hasta que el dado llegue a 0  
+                //Cuando llega a 0 se evalua la casilla donde quedó el jugador 1
+                // aux = inicio
+               //while !aux.jugador1
+               //aux = aux.siguiente
+               //aux.tipo / reto trampa ....
+               //if aux.tipo == reto{
+               //crea los operandos, resuelte el problema y le envía los datos al cliente como "reto,operacion,op1,op2"
+               //si respuesta del cliente == respuesta entonces ... jugador1 se mueve
+               //si la respuesta está mal, jugador 2 retrocede 1 casilla. 
+
+            } else {
+                dout.writeUTF(m);
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "El usuario ya no está.");
+        }
+    
+        
+    
+        
+   
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args los argumentos de la línea de comando
      */
-    public static void main(String args[]) {
-        /* Configura el aspecto y sensación del Nimbus */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Crea y proyecta la interfaz */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Server().setVisible(true);
-                
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JP1;
     private javax.swing.JLabel JP2;
     private javax.swing.JTextPane Panel1;
     private javax.swing.JTextPane Panel10;
@@ -818,7 +841,7 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JTextPane Panel9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

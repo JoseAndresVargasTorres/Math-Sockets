@@ -1,22 +1,15 @@
-package Cliente;
-
-
+package Server;
 import java.awt.event.ActionEvent;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
-import javax.swing.JOptionPane;
-
 /**
  * Esta clase es para registrar al cliente con una interfaz gráfica simple
  *
  * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
  */
-public class ClientRegister extends javax.swing.JFrame {
+public class ServerRegister extends javax.swing.JFrame {
     /**
      * Crea un nuevo registro de cliente
      */
-    public ClientRegister() {
+    public ServerRegister() {
         initComponents();
     }
 
@@ -27,7 +20,7 @@ public class ClientRegister extends javax.swing.JFrame {
     /*
       Las siguientes líneas definen la interfaz gráfica para el registro
      */
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -109,7 +102,7 @@ public class ClientRegister extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     private void nameActionPerformed(ActionEvent evt) {
     }
@@ -120,20 +113,16 @@ public class ClientRegister extends javax.swing.JFrame {
      *
      * @param evt el evento consecuente a pulsar el botón Entrar
      */
-    private void connect(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect
+    private void connect(java.awt.event.ActionEvent evt) {                         
         try {
             String id = name.getText();
-            Socket s = new Socket("localhost", 8080);
-            DataInputStream din = new DataInputStream(s.getInputStream());
-            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
-            dout.writeUTF(id);
-            new Micliente(id, s).setVisible(true);
+            new Server(id).setVisible(true);
             this.dispose();
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }//GEN-LAST:event_connect
+    }                        
     /**
      * Este es el método principal, se encarga de ejecutar el código
      * con la interfaz
@@ -154,28 +143,28 @@ public class ClientRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClientRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClientRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClientRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClientRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ServerRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Crea y proyecta la interfaz */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClientRegister().setVisible(true);
+                new ServerRegister().setVisible(true);
             }
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton join;
     private javax.swing.JTextField name;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }
