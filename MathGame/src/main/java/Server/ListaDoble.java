@@ -33,9 +33,13 @@ public class ListaDoble {
         NodoDoble aux = inicio;
         while (!aux.jugador1) {
             aux = aux.siguiente;
+            
         }
-        aux.siguiente.jugador1 = true;
-        aux.jugador1 = false;
+        if(aux.siguiente != null ){
+            aux.siguiente.jugador1 = true;
+            aux.jugador1 = false;
+        }
+        
     }
     /**
      * Metodo para mover el jugador 2 de nodo
@@ -57,8 +61,11 @@ public class ListaDoble {
            while(!aux.jugador1){
                aux = aux.anterior;        
        }
-           aux.anterior.jugador1 = true;
-           aux.jugador1 = false;                
+            if(aux.anterior != null ){
+                aux.anterior.jugador1 = true;
+                aux.jugador1 = false;    
+            }
+                       
        }
     
     /**
