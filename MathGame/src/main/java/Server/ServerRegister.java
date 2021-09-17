@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
  */
 public class ServerRegister extends javax.swing.JFrame {
     /**
-     * Crea un nuevo registro de cliente
+     * Crea un nuevo registro de Server
      */
     public ServerRegister() {
         initComponents();
