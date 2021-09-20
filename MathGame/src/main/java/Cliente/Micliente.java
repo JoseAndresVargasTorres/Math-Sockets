@@ -269,8 +269,6 @@ public class Micliente extends javax.swing.JFrame {
                         aux.pan.setText(test.get(1));
                         aux.tipo = test.get(1);
                         aux = listita.inicio;  
-                    } else if (m.equals("reto")) {
-                        mover1();
                     } else if (m.equals("correcto")) {
                         mover1();
                     } else if (m.equals("incorrecto")) {

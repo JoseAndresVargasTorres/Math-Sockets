@@ -97,23 +97,19 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder1(){
-        while (!aux6.jugador1){
-            aux6 = aux6.siguiente;
-        }
-        if (aux6.anterior!=null){
-            listita.retroceder1();
-            listita.mostrarLIF();
-            if (cont == 3 ){            
-                p1y1 -= 76;
-                this.p1.setLocation(p1x1,p1y1);
-                cont = 0;
-                movex1 *= -1;            
-            }else{
-                System.out.println("mover1_contador_re: " + cont);
-                p1x1 -= movex1;
-                this.p1.setLocation(p1x1,p1y1);
-                cont++;
-            }  
+        listita.retroceder1();
+        listita.mostrarLIF();
+        if (cont == 3 ){            
+            p1y1 -= 76;
+            this.p1.setLocation(p1x1,p1y1);
+            cont = 0;
+            movex1 *= -1;            
+        }else{
+            System.out.println("mover1_contador_re: " + cont);
+            p1x1 -= movex1;
+            this.p1.setLocation(p1x1,p1y1);
+            cont++;
+             
         }
     }
     
@@ -122,24 +118,21 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder2(){
-        while (!aux6.jugador2){
-            aux6 = aux6.siguiente;
+
+        listita.retroceder2();
+        listita.mostrarLIF();
+        if (cont2 == 3){            
+            p2y1 -= 76;
+            this.p2.setLocation(p2x1,p2y1);
+            cont2 = 0;
+            movex2 *= -1;            
+        }else{
+            System.out.println("mover1_contador_re: " + cont);
+            p2x1 -= movex2;
+            this.p2.setLocation(p2x1,p2y1);
+            cont2++;
         }
-        if (aux6.anterior!=null){
-            listita.retroceder2();
-            listita.mostrarLIF();
-            if (cont2 == 3){            
-                p2y1 -= 76;
-                this.p2.setLocation(p2x1,p2y1);
-                cont2 = 0;
-                movex2 *= -1;            
-            }else{
-                System.out.println("mover1_contador_re: " + cont);
-                p2x1 -= movex2;
-                this.p2.setLocation(p2x1,p2y1);
-                cont2++;
-            }
-        }
+        
     }
     
     
@@ -380,17 +373,27 @@ public class Server extends javax.swing.JFrame {
             }
             while (true) {
                 try {
+                    
                     String i = new DataInputStream(s.getInputStream()).readUTF();
                     String m = i;
-                    List<String> test = Arrays.asList(m.split(","));
+                    List<String> test = Arrays.asList(i.split(","));
                     if (i.equals("mover1")){ //Este if separa una solicitud de monto de un mensaje normal
                         new DataOutputStream(s.getOutputStream()).writeUTF(i);
                         mover1();
-
-                    } else if (i.equals("Reto")) {
-                        dout.writeUTF(i);
-                        mover1();
                         
+                        
+                    } else if (i.contains("#4344554@@@@@67667@@")) {
+                        i = i.substring(20);
+                        StringTokenizer st = new StringTokenizer(i, ":");
+                        String id = st.nextToken();
+                        i = st.nextToken();
+                        try {
+                            new DataOutputStream(((Socket) clientColl.get(id)).getOutputStream()).writeUTF("< " + ID + " para tí > " + i);
+                        } catch (Exception ex) {
+                            clientColl.remove(id);
+                            JP2.setText(id + ": salió!");
+
+                        }
                     } else if (i.equals("correcto")) {
                         new DataOutputStream(s.getOutputStream()).writeUTF("correcto");
                         mover1();
