@@ -5,8 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -355,28 +357,6 @@ public class Server extends javax.swing.JFrame {
             this.s = s;
             this.ID = ID;
         }
-        public void Dadooficial() {
-            int valorDado2 = 2;
-            //int valorDado2 = t.nextInt(4)+1;  // Entre 0 y 5, más 1.
-            System.out.println("Valor del dado:  "+ valorDado2);
-            //System.out.println(auxi1);
-            //Realiza los movimientos del jugador, dependiendo el valor del dado que haya salido.
-            while (valorDado2>0 ){
-                    mover1();
-                    valorDado2--;
-                } 
-            NodoDoble aux = listita.inicio;
-            while (aux.jugador1 == false){
-                aux = aux.siguiente;
-            }
-            if (aux.tipo.equals("Reto")){
-                try {
-                    new DataOutputStream(s.getOutputStream()).writeUTF("Reto");
-                } catch (IOException ex) {
-                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
         /**
          * Este método se encarga de recibir los paquetes de datos (mensajes)
          * y los envía a los clientes correspondientes
@@ -401,25 +381,14 @@ public class Server extends javax.swing.JFrame {
             while (true) {
                 try {
                     String i = new DataInputStream(s.getInputStream()).readUTF();
+                    String m = i;
+                    List<String> test = Arrays.asList(m.split(","));
                     if (i.equals("mover1")){ //Este if separa una solicitud de monto de un mensaje normal
                         new DataOutputStream(s.getOutputStream()).writeUTF(i);
                         mover1();
-                        
-                        
-                    } else if (i.contains("#4344554@@@@@67667@@")) {
-                        i = i.substring(20);
-                        StringTokenizer st = new StringTokenizer(i, ":");
-                        String id = st.nextToken();
-                        i = st.nextToken();
-                        try {
-                            new DataOutputStream(((Socket) clientColl.get(id)).getOutputStream()).writeUTF("< " + ID + " para tí > " + i);
-                        } catch (Exception ex) {
-                            clientColl.remove(id);
-                            JP2.setText(id + ": salió!");
 
-                        }
                     } else if (i.equals("Reto")) {
-                        new DataOutputStream(s.getOutputStream()).writeUTF(i);
+                        dout.writeUTF(i);
                         mover1();
                         
                     } else if (i.equals("correcto")) {
