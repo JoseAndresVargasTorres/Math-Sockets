@@ -54,7 +54,7 @@ public class ServerRegister extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("SimSun-ExtB", 0, 36)); // NOI18N
-        jLabel1.setText("Usuario:");
+        jLabel1.setText("Host:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

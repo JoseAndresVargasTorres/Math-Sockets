@@ -26,51 +26,95 @@ public class Micliente extends javax.swing.JFrame {
     DataInputStream din;
     DataOutputStream dout;
     DefaultListModel dlm;
-    int p1x = 20;
-    int p1x2 = 106;
-    int p1y = 205;
-    int p2y = 205;
+
+    int p1x1 = 20;
+    int p1y1 = 205;
+    int p2x1 = 68;
+    int p2y1 = 205;
     int cont = 3;
     int cont2 = 3;
     int movex1 = 105;
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
-    
+    NodoDoble aux6;
     /**
      * Metodo que permite mover al jugador de posicion
      */
     public void mover1(){
-        //listita.mover1();
+        listita.mover1();
         System.out.println("contador adelante "+ cont);
         if (cont == 0){            
-            p1y += 76;
-            this.p1.setLocation(p1x,p1y);
+            p1y1 += 76;
+            this.p1.setLocation(p1x1,p1y1);
             cont = 3;
             movex1 *= -1; 
         } else {
             System.out.println(cont);
-            p1x += movex1;
-            this.p1.setLocation(p1x,p1y);
+            p1x1 += movex1;
+            this.p1.setLocation(p1x1,p1y1);
             cont--;
             }
     }
+    public void mover2(){
+        listita.mover2();
+        if (cont2 == 0){
+            p2y1 += 76;
+            this.p2.setLocation(p2x1,p2y1);
+            cont2 = 3;
+            movex2 *= -1;
+        }else{
+            System.out.println(cont2);
+            p2x1 += movex2;
+            this.p2.setLocation(p2x1,p2y1);
+            cont2--;
+        }
+    
+    }
     
     public void retroceder1(){
-        //listita.retroceder1();
-        System.out.println("contador retroceso"+ cont);
-        if (cont == 3){            
-            p1y -= 76;
-            this.p1.setLocation(p1x,p1y);
-            cont = 0;
-            movex1 *= -1; 
-        
+        while (!aux6.jugador1){
+            aux6 = aux6.siguiente;
         }
-        else {
-            System.out.println(cont);
-            p1x -= movex1;
-            this.p1.setLocation(p1x,p1y);
-            cont++;
+        if (aux6.anterior!=null){
+            listita.retroceder1();
+            listita.mostrarLIF();
+            if (cont == 3 ){            
+                p1y1 -= 76;
+                this.p1.setLocation(p1x1,p1y1);
+                cont = 0;
+                movex1 *= -1;            
+            }else{
+                System.out.println("mover1_contador_re: " + cont);
+                p1x1 -= movex1;
+                this.p1.setLocation(p1x1,p1y1);
+                cont++;
+            }  
+        }
+    }
+    
+    /**
+     * Este metodo permite al jugador 2 retroceder de casilla
+     */
+    
+    public void retroceder2(){
+        while (!aux6.jugador2){
+            aux6 = aux6.siguiente;
+        }
+        if (aux6.anterior!=null){
+            listita.retroceder2();
+            listita.mostrarLIF();
+            if (cont2 == 3){            
+                p2y1 -= 76;
+                this.p2.setLocation(p2x1,p2y1);
+                cont2 = 0;
+                movex2 *= -1;            
+            }else{
+                System.out.println("mover1_contador_re: " + cont);
+                p2x1 -= movex2;
+                this.p2.setLocation(p2x1,p2y1);
+                cont2++;
             }
+        }
     }
     
     /*public void reto(){
@@ -122,6 +166,9 @@ public class Micliente extends javax.swing.JFrame {
             listita.agregarAlFinal("Error", Panel14, false, false);
             listita.agregarAlFinal("Error", Panel15, false, false);
             listita.agregarAlFinal("Final", Panel16, false, false);
+            listita.inicio.jugador1 = true;
+            listita.inicio.jugador2 = true; 
+            aux6 = listita.inicio;
             dlm = new DefaultListModel();
             UL.setModel(dlm);
             idlabel.setText(i);
@@ -160,55 +207,84 @@ public class Micliente extends javax.swing.JFrame {
                         retroceder1();
                     } else if (test.get(0).equals("0")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("1")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("2")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("3")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("4")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("5")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("6")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("7")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("8")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("9")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("10")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("11")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("12")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("13")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;   
                     } else if (test.get(0).equals("14")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = aux.siguiente;  
                     } else if (test.get(0).equals("15")) {
                         aux.pan.setText(test.get(1));
+                        aux.tipo = test.get(1);
                         aux = listita.inicio;  
                     } else if (m.equals("reto")) {
                         mover1();
-                        
+                    } else if (m.equals("correcto")) {
+                        mover1();
+                    } else if (m.equals("incorrecto")) {
+                        mover1();
+                        retroceder2();
+                    }else if (test.get(0).equals("suma")) {
+                        int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
+                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                        if(resultado3 == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto");
+                        } else {
+                            dout.writeUTF("incorrecto");
+                        }  
                 }
 
                 } catch (Exception ex) {
@@ -357,9 +433,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -577,11 +653,11 @@ public class Micliente extends javax.swing.JFrame {
     }//GEN-LAST:event_todos
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+        mover2();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            retroceder1();
+    retroceder1();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

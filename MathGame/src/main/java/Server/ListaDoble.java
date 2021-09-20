@@ -72,13 +72,16 @@ public class ListaDoble {
      * Metodo para retroceder al jugador 1 en la lista 
      */
     public void retroceder2(){
-        NodoDoble aux = fin;
-        while(!aux.jugador2){
-            aux = aux.anterior;        
-    }
-        aux.anterior.jugador2 = true;
-        aux.jugador2 = false;                
-    }   
+           NodoDoble aux = fin;
+           while(!aux.jugador2){
+               aux = aux.anterior;        
+       }
+            if(aux.anterior != null ){
+                aux.anterior.jugador2 = true;
+                aux.jugador2 = false;    
+            }
+                       
+       }
     
     
 

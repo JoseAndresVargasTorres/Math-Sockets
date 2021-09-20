@@ -29,10 +29,10 @@ public class Server extends javax.swing.JFrame {
     /**
      * Aqui se encuneran los metodos y atributos de utilizados en la clase server
      */
-    int p1x = 55;
-    int p1x2 = 106;
+    int p1x1 = 55;
+    int p2x1 = 106;
     int p1y1 = 115;
-    int p1y2 = 115;
+    int p2y1 = 115;
     int cont = 3;
     int cont2 = 3;
     int movex1 = 105;
@@ -43,6 +43,7 @@ public class Server extends javax.swing.JFrame {
     NodoDoble aux3;
     NodoDoble aux4;
     NodoDoble aux5;
+    NodoDoble aux6;
     /**
      * Este metodo permite mover al jugador 1 de casilla
      */
@@ -52,13 +53,13 @@ public class Server extends javax.swing.JFrame {
         listita.mostrarLIF();
         if (cont == 0){            
             p1y1 += 76;
-            this.p1.setLocation(p1x,p1y1);
+            this.p1.setLocation(p1x1,p1y1);
             cont = 3;
             movex1 *= -1;            
         }else{
             System.out.println(cont);
-            p1x += movex1;
-            this.p1.setLocation(p1x,p1y1);
+            p1x1 += movex1;
+            this.p1.setLocation(p1x1,p1y1);
             cont--;
             if(listita.fin.jugador1 ==true){
                 
@@ -76,14 +77,14 @@ public class Server extends javax.swing.JFrame {
         listita.mover2();
         listita.mostrarLIF();
         if (cont2 == 0){
-            p1y2 += 76;
-            this.p2.setLocation(p1x2,p1y2);
+            p2y1 += 76;
+            this.p2.setLocation(p2x1,p2y1);
             cont2 = 3;
             movex2 *= -1;
         }else{
             System.out.println(cont2);
-            p1x2 += movex2;
-            this.p2.setLocation(p1x2,p1y2);
+            p2x1 += movex2;
+            this.p2.setLocation(p2x1,p2y1);
             cont2--;
         }
     
@@ -94,21 +95,23 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder1(){
-        
-        listita.retroceder1();
-        
-        listita.mostrarLIF();
-        if (cont == 3 ){            
-            p1y1 -= 76;
-            this.p1.setLocation(p1x,p1y1);
-            cont = 0;
-            movex1 *= -1;            
-        }else{
-            System.out.println("mover1_contador_re: " + cont);
-            p1x -= movex1;
-            this.p1.setLocation(p1x,p1y1);
-            cont++;
-            
+        while (!aux6.jugador1){
+            aux6 = aux6.siguiente;
+        }
+        if (aux6.anterior!=null){
+            listita.retroceder1();
+            listita.mostrarLIF();
+            if (cont == 3 ){            
+                p1y1 -= 76;
+                this.p1.setLocation(p1x1,p1y1);
+                cont = 0;
+                movex1 *= -1;            
+            }else{
+                System.out.println("mover1_contador_re: " + cont);
+                p1x1 -= movex1;
+                this.p1.setLocation(p1x1,p1y1);
+                cont++;
+            }  
         }
     }
     
@@ -117,19 +120,23 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder2(){
-        listita.retroceder2();
-        listita.mostrarLIF();
-        if (cont2 == 3){            
-            p1y2 -= 76;
-            this.p2.setLocation(p1x2,p1y2);
-            cont2 = 0;
-            movex2 *= -1;            
-        }else{
-            System.out.println("mover1_contador_re: " + cont);
-            p1x2 -= movex2;
-            this.p2.setLocation(p1x2,p1y2);
-            cont2++;
-            
+        while (!aux6.jugador2){
+            aux6 = aux6.siguiente;
+        }
+        if (aux6.anterior!=null){
+            listita.retroceder2();
+            listita.mostrarLIF();
+            if (cont2 == 3){            
+                p2y1 -= 76;
+                this.p2.setLocation(p2x1,p2y1);
+                cont2 = 0;
+                movex2 *= -1;            
+            }else{
+                System.out.println("mover1_contador_re: " + cont);
+                p2x1 -= movex2;
+                this.p2.setLocation(p2x1,p2y1);
+                cont2++;
+            }
         }
     }
     
@@ -323,6 +330,7 @@ public class Server extends javax.swing.JFrame {
             aux3 = listita.inicio;
             aux4 = listita.inicio;
             aux5 = listita.inicio;
+            aux6 = listita.inicio;
             System.out.println("-----------------------------------------------");
             
             
@@ -411,17 +419,18 @@ public class Server extends javax.swing.JFrame {
 
                         }
                     } else if (i.equals("Reto")) {
-                        i = i.substring(20);
-                        StringTokenizer st = new StringTokenizer(i, ":");
-                        String id = st.nextToken();
-                        i = st.nextToken();
-                        try {
-                            new DataOutputStream(((Socket) clientColl.get(id)).getOutputStream()).writeUTF("< " + ID + " para tí > " + i);
-                        } catch (Exception ex) {
-                            clientColl.remove(id);
-                            JP2.setText(id + ": salió!");
+                        new DataOutputStream(s.getOutputStream()).writeUTF(i);
+                        mover1();
+                        
+                    } else if (i.equals("correcto")) {
+                        new DataOutputStream(s.getOutputStream()).writeUTF("correcto");
+                        mover1();
+                        
+                    } else if (i.equals("incorrecto")) {
+                        new DataOutputStream(s.getOutputStream()).writeUTF("incorrecto");
+                        mover1();
+                        retroceder2();
 
-                        }
                     } else {
                         Set k = clientColl.keySet();
                         Iterator itr = k.iterator();
@@ -588,9 +597,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -770,9 +779,6 @@ public class Server extends javax.swing.JFrame {
             
             
             while (ValorDado>0 && listita.getPos().siguiente != null  ) {
-                
-                
-                
                 dout.writeUTF("mover1");
                 mover1();
                 ValorDado--;
@@ -802,6 +808,20 @@ public class Server extends javax.swing.JFrame {
                     dout.writeUTF("retroceder1");
                     retroceder1();
                     tp--;
+                }
+            }else if(aux4.tipo == "Reto") {
+                int op1 = r.nextInt(50) + 1;
+                int op2 = r.nextInt(50) + 1;
+                int operando = r.nextInt(4) + 1;
+                String Sop1 = Integer.toString(op1);
+                String Sop2 = Integer.toString(op2);
+                //String Sop = Integer.toString(operando);
+                String Sop = "suma";
+                JOptionPane.showMessageDialog(null, "Reto para el jugador 2", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                try {
+                    dout.writeUTF(Sop + "," + Sop1 + "," + Sop2); // "suma,10,5"
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "ERRRRRRRRRRROR", "Errrrr", JOptionPane.INFORMATION_MESSAGE);
                 }
                 
             }
