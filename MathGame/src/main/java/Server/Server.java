@@ -378,46 +378,16 @@ public class Server extends javax.swing.JFrame {
                     String m = i;
                     List<String> test = Arrays.asList(i.split(","));
                     if (i.equals("mover1")){ //Este if separa una solicitud de monto de un mensaje normal
-                        new DataOutputStream(s.getOutputStream()).writeUTF(i);
+                        dout.writeUTF(i);
                         mover1();
-                        
-                        
-                    } else if (i.contains("#4344554@@@@@67667@@")) {
-                        i = i.substring(20);
-                        StringTokenizer st = new StringTokenizer(i, ":");
-                        String id = st.nextToken();
-                        i = st.nextToken();
-                        try {
-                            new DataOutputStream(((Socket) clientColl.get(id)).getOutputStream()).writeUTF("< " + ID + " para tí > " + i);
-                        } catch (Exception ex) {
-                            clientColl.remove(id);
-                            JP2.setText(id + ": salió!");
-
-                        }
                     } else if (i.equals("correcto")) {
-                        new DataOutputStream(s.getOutputStream()).writeUTF("correcto");
+                        dout.writeUTF("correcto");
                         mover1();
                         
                     } else if (i.equals("incorrecto")) {
-                        new DataOutputStream(s.getOutputStream()).writeUTF("incorrecto");
+                        dout.writeUTF("incorrecto");
                         mover1();
                         retroceder2();
-
-                    } else {
-                        Set k = clientColl.keySet();
-                        Iterator itr = k.iterator();
-                        while (itr.hasNext()) {
-                            String key = (String) itr.next();
-                            if (!key.equalsIgnoreCase(ID)) {
-                                try {
-                                    new DataOutputStream(((Socket) clientColl.get(key)).getOutputStream()).writeUTF("< " + ID + " para todos > " + i);
-                                } catch (Exception ex) {
-                                    clientColl.remove(key);
-                                    JP2.setText(key + ": salió!");
-
-                                }
-                            }
-                        }
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();

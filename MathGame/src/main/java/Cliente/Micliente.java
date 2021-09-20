@@ -72,23 +72,19 @@ public class Micliente extends javax.swing.JFrame {
     }
     
     public void retroceder1(){
-        while (!aux6.jugador1){
-            aux6 = aux6.siguiente;
-        }
-        if (aux6.anterior!=null){
-            listita.retroceder1();
-            listita.mostrarLIF();
-            if (cont == 3 ){            
-                p1y1 -= 76;
-                this.p1.setLocation(p1x1,p1y1);
-                cont = 0;
-                movex1 *= -1;            
-            }else{
-                System.out.println("mover1_contador_re: " + cont);
-                p1x1 -= movex1;
-                this.p1.setLocation(p1x1,p1y1);
-                cont++;
-            }  
+        listita.retroceder1();
+        listita.mostrarLIF();
+        if (cont == 3 ){            
+            p1y1 -= 76;
+            this.p1.setLocation(p1x1,p1y1);
+            cont = 0;
+            movex1 *= -1;            
+        }else{
+            System.out.println("mover1_contador_re: " + cont);
+            p1x1 -= movex1;
+            this.p1.setLocation(p1x1,p1y1);
+            cont++;
+             
         }
     }
     
@@ -97,24 +93,21 @@ public class Micliente extends javax.swing.JFrame {
      */
     
     public void retroceder2(){
-        while (!aux6.jugador2){
-            aux6 = aux6.siguiente;
+
+        listita.retroceder2();
+        listita.mostrarLIF();
+        if (cont2 == 3){            
+            p2y1 -= 76;
+            this.p2.setLocation(p2x1,p2y1);
+            cont2 = 0;
+            movex2 *= -1;            
+        }else{
+            System.out.println("mover1_contador_re: " + cont);
+            p2x1 -= movex2;
+            this.p2.setLocation(p2x1,p2y1);
+            cont2++;
         }
-        if (aux6.anterior!=null){
-            listita.retroceder2();
-            listita.mostrarLIF();
-            if (cont2 == 3){            
-                p2y1 -= 76;
-                this.p2.setLocation(p2x1,p2y1);
-                cont2 = 0;
-                movex2 *= -1;            
-            }else{
-                System.out.println("mover1_contador_re: " + cont);
-                p2x1 -= movex2;
-                this.p2.setLocation(p2x1,p2y1);
-                cont2++;
-            }
-        }
+        
     }
     
     /*public void reto(){
