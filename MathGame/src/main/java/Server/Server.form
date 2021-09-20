@@ -116,7 +116,7 @@
                                       <Component id="p2" min="-2" max="-2" attributes="0"/>
                                       <Component id="p1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -417,14 +417,14 @@
         <Component class="javax.swing.JLabel" name="p2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kenda\OneDrive\Documents\NetBeansProjects\Testeo\src\main\java\Images\ganon.png"/>
+              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\img\ganon.png"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="p1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\kenda\OneDrive\Documents\NetBeansProjects\Testeo\src\main\java\Images\link.png"/>
+              <Image iconType="2" name="C:\Users\jose\OneDrive - Estudiantes ITCR\ordenador\Documentos\NetBeansProjects\Math-Sockets\MathGame\src\main\java\img\link.png"/>
             </Property>
           </Properties>
           <AuxValues>

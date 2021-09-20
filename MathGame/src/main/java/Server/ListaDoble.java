@@ -157,4 +157,13 @@ public class ListaDoble {
             return null;
         }
     }
+    
+    public NodoDoble getPos(){
+       NodoDoble aux = inicio;
+       while(aux.jugador1 == false){
+           aux = aux.siguiente;
+       }
+       return aux;
+    }
+    
 }

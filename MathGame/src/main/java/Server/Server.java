@@ -41,6 +41,8 @@ public class Server extends javax.swing.JFrame {
     NodoDoble auxi1 ;
     NodoDoble aux2;
     NodoDoble aux3;
+    NodoDoble aux4;
+    NodoDoble aux5;
     /**
      * Este metodo permite mover al jugador 1 de casilla
      */
@@ -92,9 +94,11 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder1(){
+        
         listita.retroceder1();
+        
         listita.mostrarLIF();
-        if (cont == 3){            
+        if (cont == 3 ){            
             p1y1 -= 76;
             this.p1.setLocation(p1x,p1y1);
             cont = 0;
@@ -211,35 +215,6 @@ public class Server extends javax.swing.JFrame {
        
         /*
         
-        //Se realiza si un jugador cae en una casilla de trampa, hace que el jugador retroceda una cantidad aleatoria de casillas.
-        if(auxi1.tipo == "Trampa" && jugador == "jugador1"){
-            int r = t.nextInt(3)+1;
-            if(r == 1){
-                retroceder1();                
-            }else if(r == 2){
-                retroceder1();
-                retroceder1();
-            }else if(r == 3){
-                retroceder1();
-                retroceder1();
-                retroceder1();
-            }
-        }
-        
-        //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
-        if(auxi1.tipo == "Túnel" && jugador == "jugador1"){
-            int a = t.nextInt(3)+1;
-            if(a ==1){
-                mover1();               
-            }else if(a == 2){
-                mover1();
-                mover1();               
-            }else if(a == 3){
-                mover1();               
-                mover1();               
-                mover1();               
-            }
-        }
         
             
     }
@@ -346,6 +321,8 @@ public class Server extends javax.swing.JFrame {
             listita.mostrarLIF();
             aux2 = listita.inicio;
             aux3 = listita.inicio;
+            aux4 = listita.inicio;
+            aux5 = listita.inicio;
             System.out.println("-----------------------------------------------");
             
             
@@ -611,9 +588,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -701,7 +678,7 @@ public class Server extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(p2)
                                     .addComponent(p1))
-                                .addGap(0, 6, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(JP1)))
@@ -786,12 +763,60 @@ public class Server extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            // Que el dado haga la función de mover el jugador en ambas ventanas se desactiva
-            String m = "reto";
-
-            if (m.equals("reto")) {
+            
+            Random r = new Random();
+            int ValorDado = r.nextInt(4)+1;
+            //String m = "reto";
+            
+            
+            while (ValorDado>0 && listita.getPos().siguiente != null  ) {
+                
+                
+                
                 dout.writeUTF("mover1");
-                mover1();   // Hasta que el dado llegue a 0  
+                mover1();
+                ValorDado--;
+            }
+            
+            while(aux4.jugador1==false){
+                aux4 = aux4.siguiente;
+                
+            }
+            
+            if(aux4.tipo == "Túnel"){
+                int tl = r.nextInt(3)+1;
+                String tltext = Integer.toString(tl);
+                JOptionPane.showMessageDialog(null, "Te mueves "+ tltext+ " casilla(s)", "Túnel", JOptionPane.INFORMATION_MESSAGE);
+                while(tl>0 && listita.getPos().siguiente != null){
+                    dout.writeUTF("mover1");
+                    mover1();
+                    tl--;
+                }
+            }
+            
+            else if(aux4.tipo == "Trampa") {
+                int tp = r.nextInt(3)+1;
+                String tptext = Integer.toString(tp);
+                JOptionPane.showMessageDialog(null, "Te devuelves "+ tptext+ " casilla(s)", "Trampa", JOptionPane.INFORMATION_MESSAGE);
+                while(tp>0 && listita.getPos().anterior != null){
+                    dout.writeUTF("retroceder1");
+                    retroceder1();
+                    tp--;
+                }
+                
+            }
+            /*
+            else if(aux.tipo == "Reto"){
+                int op1 = t.nextInt(50)+1;
+                int op2 = t.nextInt(50)+1;
+                int operando = t.nextInt(4)+1;
+                
+            
+            }
+            */
+            // Que el dado haga la función de mover el jugador en ambas ventanas se desactiva
+            
+            // Hasta que el dado llegue a 0  
                 //Cuando llega a 0 se evalua la casilla donde quedó el jugador 1
                 // aux = inicio
                //while !aux.jugador1
@@ -802,12 +827,11 @@ public class Server extends javax.swing.JFrame {
                //si respuesta del cliente == respuesta entonces ... jugador1 se mueve
                //si la respuesta está mal, jugador 2 retrocede 1 casilla. 
 
-            } else {
-                dout.writeUTF(m);
+            
 
-            }
+            
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "El usuario ya no está.");
+          
         }
     
         

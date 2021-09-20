@@ -40,6 +40,8 @@ public class Micliente extends javax.swing.JFrame {
      * Metodo que permite mover al jugador de posicion
      */
     public void mover1(){
+        //listita.mover1();
+        System.out.println("contador adelante "+ cont);
         if (cont == 0){            
             p1y += 76;
             this.p1.setLocation(p1x,p1y);
@@ -52,20 +54,39 @@ public class Micliente extends javax.swing.JFrame {
             cont--;
             }
     }
-    public void reto(){
-        if (cont == 0){            
-            p1y += 76;
+    
+    public void retroceder1(){
+        //listita.retroceder1();
+        System.out.println("contador retroceso"+ cont);
+        if (cont == 3){            
+            p1y -= 76;
             this.p1.setLocation(p1x,p1y);
-            cont = 3;
+            cont = 0;
             movex1 *= -1; 
-        } else {
-            System.out.println(cont);
-            p1x += movex1;
-            this.p1.setLocation(p1x,p1y);
-            cont--;
-            }
-    }
         
+        }
+        else {
+            System.out.println(cont);
+            p1x -= movex1;
+            this.p1.setLocation(p1x,p1y);
+            cont++;
+            }
+    }
+    
+    /*public void reto(){
+        if (cont == 0){            
+            p1y += 76;
+            this.p1.setLocation(p1x,p1y);
+            cont = 3;
+            movex1 *= -1; 
+        } else {
+            System.out.println(cont);
+            p1x += movex1;
+            this.p1.setLocation(p1x,p1y);
+            cont--;
+            }
+    }
+   */     
     
 
     /**
@@ -130,10 +151,13 @@ public class Micliente extends javax.swing.JFrame {
             while (true) {
                 try {
                     String m = din.readUTF();
+                    System.out.println(m);
                     String i = m;
                     List<String> test = Arrays.asList(i.split(","));
                     if (m.equals("mover1")){
                         mover1();
+                    }else if(m.equals("retroceder1")){
+                        retroceder1();
                     } else if (test.get(0).equals("0")) {
                         aux.pan.setText(test.get(1));
                         aux = aux.siguiente;
@@ -333,9 +357,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\src\\main\\java\\Images\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -557,7 +581,7 @@ public class Micliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+            retroceder1();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

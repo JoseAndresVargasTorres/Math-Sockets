@@ -39,4 +39,6 @@ public class NodoDoble {
         siguiente=s;
         anterior=a;
     }
+    
+    
 }
