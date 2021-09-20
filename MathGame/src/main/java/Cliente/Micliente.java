@@ -199,74 +199,83 @@ public class Micliente extends javax.swing.JFrame {
                     }else if(m.equals("retroceder1")){
                         retroceder1();
                     } else if (test.get(0).equals("0")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("1."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("1")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("2."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("2")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("3."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("3")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("4."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("4")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("5."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("5")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("6."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("6")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("7."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("7")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("8."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("8")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("9."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("9")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("10."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("10")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("11."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("11")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("12."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("12")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("13."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("13")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("14."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;   
                     } else if (test.get(0).equals("14")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("15."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;  
                     } else if (test.get(0).equals("15")) {
-                        aux.pan.setText(test.get(1));
+                        aux.pan.setText("16."+test.get(1));
                         aux.tipo = test.get(1);
                         aux = listita.inicio;  
                     } else if (m.equals("correcto")) {
                         mover1();
                     } else if (m.equals("incorrecto")) {
-                        mover1();
-                        retroceder2();
+                        while(!aux6.jugador2){
+                            aux6 = aux6.siguiente;
+                        }
+                        if(aux6.anterior != null ){
+                            mover1();
+                            retroceder2();
+                        }else{
+                            mover1();  
+                        }
+                        
+                            
                     }else if (test.get(0).equals("suma")) {
                         int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
                         int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
@@ -424,9 +433,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {

@@ -243,8 +243,9 @@ public class Server extends javax.swing.JFrame {
             this.JP1.setText("Bienvenido: "+jugador1);
             this.JP2.setText(i+" joined!");
             this.Panel1.setEditable(false);
-            this.Panel1.setText("Inicio");
-            int contador = 14;
+            this.Panel1.setText("1.Inicio");
+            int contador = 2;
+            
             int reto = 7;
             int trampa = 4;
             int tunel = 3;
@@ -271,36 +272,38 @@ public class Server extends javax.swing.JFrame {
             auxi1 = listita.inicio;
             
             //Se programa la aleatoriedad de las casillas
-            while(contador>0){
+            while(contador<=15){
+                String index = Integer.toString(contador);
                 Random r = new Random();
                 int valorDado = r.nextInt(9)+1;  // Entre 0 y 5, más 1.
                 //System.out.println(valorDado);
 
                 //Coloca de manera aleatoria las casillas de reto.
                 if (valorDado == 3 && reto != 0 || valorDado == 6 && reto != 0 || valorDado == 9 && reto != 0){
-                    aux.pan.setText("Reto");
+                    
+                    aux.pan.setText(index +".Reto");
                     aux.tipo = "Reto";
                     aux.pan.setEditable(false);
                     aux = aux.siguiente;
-                    contador--;
+                    contador++;
                     reto--;
                     
                 //Coloca de manera aleatoria las casillas de trampa.
                 } else if (valorDado == 2 && trampa != 0 || valorDado == 5 && trampa != 0 || valorDado == 8 && trampa != 0) {  
-                    aux.pan.setText("Trampa");
+                    aux.pan.setText(index +".Trampa");
                     aux.tipo = "Trampa";
                     aux.pan.setEditable(false);
                     aux = aux.siguiente;
-                    contador--;
+                    contador++;
                     trampa--;
                     
                 //Coloca de manera aleatoria las casillas de tunel.
                 } else if(valorDado == 1 && tunel != 0 || valorDado == 4 && tunel != 0 || valorDado == 7 && tunel != 0) {  
-                    aux.pan.setText("Túnel");
+                    aux.pan.setText(index +".Túnel");
                     aux.tipo = "Túnel";
                     aux.pan.setEditable(false);
                     aux = aux.siguiente;
-                    contador--;
+                    contador++;
                     tunel--;
                 }                                                          
             }
@@ -314,7 +317,7 @@ public class Server extends javax.swing.JFrame {
         //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
         
             this.Panel16.setEditable(false);
-            this.Panel16.setText("Final");            
+            this.Panel16.setText("16.Final");            
             this.p2.setLocation(104,115);
             this.p1.setLocation(55,115);
             getContentPane().setComponentZOrder(this.p1, 0);
@@ -386,8 +389,15 @@ public class Server extends javax.swing.JFrame {
                         
                     } else if (i.equals("incorrecto")) {
                         dout.writeUTF("incorrecto");
-                        mover1();
-                        retroceder2();
+                        while(!aux6.jugador2){
+                            aux6 = aux6.siguiente;
+                        }
+                        if(aux6.anterior != null ){
+                            mover1();
+                            retroceder2();
+                        }else{
+                            mover1();  
+                        }
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -539,9 +549,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -719,7 +729,9 @@ public class Server extends javax.swing.JFrame {
             int ValorDado = r.nextInt(4)+1;
             //String m = "reto";
             
-            
+            System.out.println("---------------------------*-------------");
+            System.out.println(ValorDado);
+            System.out.println("---------------------------*-------------");
             while (ValorDado>0 && listita.getPos().siguiente != null  ) {
                 dout.writeUTF("mover1");
                 mover1();
