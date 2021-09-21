@@ -455,7 +455,7 @@ public class Server extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                                 dout.writeUTF("incorrecto2");
                             }  
-                        } else if (m.equals("dadoOn")) {
+                        } else if (m.equals("dadoOn") && !listita.fin.jugador1) {
                             Dado1.setEnabled(true);
                     }
 
@@ -610,9 +610,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

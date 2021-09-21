@@ -341,7 +341,7 @@ public class Micliente extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto");
                         }  
-                }else if (m.equals("dadoOn")) {
+                }else if (m.equals("dadoOn") && !listita.fin.jugador2) {
                             Dado2.setEnabled(true);
                     }
 
@@ -492,9 +492,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
