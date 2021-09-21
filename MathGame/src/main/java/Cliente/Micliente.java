@@ -37,6 +37,7 @@ public class Micliente extends javax.swing.JFrame {
     int movex2 = 105;
     ListaDoble listita = new ListaDoble();
     NodoDoble aux6;
+    NodoDoble aux4;
     /**
      * Metodo que permite mover al jugador de posicion
      */
@@ -53,7 +54,11 @@ public class Micliente extends javax.swing.JFrame {
             p1x1 += movex1;
             this.p1.setLocation(p1x1,p1y1);
             cont--;
+            if(listita.fin.jugador1 ==true){                
+                JOptionPane.showMessageDialog(null, "Gano el jugador 1", "Perdiste", JOptionPane.INFORMATION_MESSAGE);                
+                Dado2.setEnabled(false);
             }
+        }
     }
     public void mover2(){
         listita.mover2();
@@ -67,6 +72,10 @@ public class Micliente extends javax.swing.JFrame {
             p2x1 += movex2;
             this.p2.setLocation(p2x1,p2y1);
             cont2--;
+            if(listita.fin.jugador2){                
+                JOptionPane.showMessageDialog(null, "Felicidades", "Ganaste", JOptionPane.INFORMATION_MESSAGE);                
+                Dado2.setEnabled(false);
+            }
         }
     
     }
@@ -143,6 +152,7 @@ public class Micliente extends javax.swing.JFrame {
         iD = i;
         try {
             initComponents();
+            Dado2.setEnabled(false);
             listita.agregarAlInicio("Inicio", Panel1, true, true);
             listita.agregarAlFinal("Error", Panel2, false, false);
             listita.agregarAlFinal("Error", Panel3, false, false);
@@ -190,7 +200,7 @@ public class Micliente extends javax.swing.JFrame {
             NodoDoble aux = listita.inicio;
             while (true) {
                 try {
-                    String m = din.readUTF();
+                    String m = din.readUTF();                    
                     System.out.println(m);
                     String i = m;
                     List<String> test = Arrays.asList(i.split(","));
@@ -274,6 +284,21 @@ public class Micliente extends javax.swing.JFrame {
                         }else{
                             mover1();  
                         }
+                    }else if (i.equals("correcto2")) {
+                        dout.writeUTF("correcto2");
+                        mover2();
+
+                    } else if (i.equals("incorrecto2")) {
+                        dout.writeUTF("incorrecto2");
+                        while(!aux6.jugador2){
+                            aux6 = aux6.siguiente;
+                        }
+                        if(aux6.anterior != null ){
+                            mover2();
+                            retroceder1();
+                        }else{
+                            mover2();  
+                        }
                         
                             
                     }else if (test.get(0).equals("suma")) {
@@ -283,9 +308,42 @@ public class Micliente extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("correcto");
                         } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto");
                         }  
-                }
+                }else if (test.get(0).equals("resta")) {
+                        int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
+                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                        if(resultado3 == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("incorrecto");
+                        }  
+                }else if (test.get(0).equals("multiplicacion")) {
+                        int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
+                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                        if(resultado3 == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("incorrecto");
+                        }  
+                }else if (test.get(0).equals("division")) {
+                        int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
+                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" / "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                        if(resultado3 == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("incorrecto");
+                        }  
+                }else if (m.equals("dadoOn")) {
+                            Dado2.setEnabled(true);
+                    }
 
                 } catch (Exception ex) {
                     break;
@@ -302,7 +360,7 @@ public class Micliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         idlabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        todos = new javax.swing.JButton();
+        Dado2 = new javax.swing.JButton();
         enviar = new javax.swing.JButton();
         msgText = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -346,6 +404,7 @@ public class Micliente extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setAlignmentX(0.0F);
@@ -360,13 +419,13 @@ public class Micliente extends javax.swing.JFrame {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        todos.setBackground(new java.awt.Color(255, 204, 204));
-        todos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        todos.setText("Todos");
-        todos.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        todos.addActionListener(new java.awt.event.ActionListener() {
+        Dado2.setBackground(new java.awt.Color(255, 204, 204));
+        Dado2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Dado2.setText("Todos");
+        Dado2.setBorder(javax.swing.BorderFactory.createCompoundBorder());
+        Dado2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                todos(evt);
+                Dado2(evt);
             }
         });
 
@@ -433,9 +492,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton2.setText("jButton1");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -519,7 +578,7 @@ public class Micliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(idlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(todos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Dado2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -529,7 +588,7 @@ public class Micliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(idlabel)
-                    .addComponent(todos, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Dado2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
@@ -648,9 +707,111 @@ public class Micliente extends javax.swing.JFrame {
      *
      * @param evt evento consecuente al pulsar el botón Todos
      */
-    private void todos(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_todos
-        clientID = "";
-    }//GEN-LAST:event_todos
+    private void Dado2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado2
+        try {
+            listita.mostrarLIF();
+            Random r = new Random();
+            int ValorDado = r.nextInt(4)+1;
+            //String m = "reto";
+            
+            System.out.println("---------------------------*-------------");
+            System.out.println(ValorDado);
+            System.out.println("---------------------------*-------------");
+            while (ValorDado>0 && listita.getPos().siguiente != null  ) {
+                dout.writeUTF("mover2");
+                mover2();
+                ValorDado--;
+            }
+            aux4 = listita.inicio;
+            while(aux4.jugador2==false){
+                aux4 = aux4.siguiente;
+                
+            }
+            System.out.println(aux4.tipo);
+            
+            if(aux4.tipo.equals("Túnel")){                
+                int tl = r.nextInt(3)+1;
+                String tltext = Integer.toString(tl);
+                JOptionPane.showMessageDialog(null, "Te mueves "+ tltext+ " casilla(s)", "Túnel", JOptionPane.INFORMATION_MESSAGE);
+                while(tl>0 && listita.getPos().siguiente != null){
+                    dout.writeUTF("mover2");
+                    mover2();
+                    tl--;
+                }
+            }
+            
+            else if(aux4.tipo.equals("Trampa")) {                
+                int tp = r.nextInt(3)+1;
+                String tptext = Integer.toString(tp);
+                JOptionPane.showMessageDialog(null, "Te devuelves "+ tptext+ " casilla(s)", "Trampa", JOptionPane.INFORMATION_MESSAGE);               
+                while(tp>0 && listita.getPos2().anterior != null){
+                    dout.writeUTF("retroceder2");
+                    retroceder2();
+                    tp--;
+                }
+            }else if(aux4.tipo.equals("Reto")) {                
+                int op1 = r.nextInt(50) + 1;
+                int op2 = r.nextInt(50) + 1;
+                int operando = r.nextInt(4) + 1;
+                String Sop1 = Integer.toString(op1);
+                String Sop2 = Integer.toString(op2);                
+                String Sop = "";
+                if(operando == 1){
+                    Sop = "suma";
+                }else if(operando == 2){
+                    Sop = "resta";
+                }else if(operando == 3){
+                    Sop = "multiplicacion";
+                }else if(operando == 4){
+                    Sop = "division";
+                }                
+                JOptionPane.showMessageDialog(null, "Reto para el jugador 1", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                try {                    
+                    dout.writeUTF(Sop + "," + Sop1 + "," + Sop2); // "suma,10,5"
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "ERRRRRRRRRRROR", "Errrrr", JOptionPane.INFORMATION_MESSAGE);
+                }
+                
+            }
+            /*
+            else if(aux.tipo == "Reto"){
+                int op1 = t.nextInt(50)+1;
+                int op2 = t.nextInt(50)+1;
+                int operando = t.nextInt(4)+1;
+                
+            
+            }
+            */
+            // Que el dado haga la función de mover el jugador en ambas ventanas se desactiva
+            
+            // Hasta que el dado llegue a 0  
+                //Cuando llega a 0 se evalua la casilla donde quedó el jugador 1
+                // aux = inicio
+               //while !aux.jugador1
+               //aux = aux.siguiente
+               //aux.tipo / reto trampa ....
+               //if aux.tipo == reto{
+               //crea los operandos, resuelte el problema y le envía los datos al cliente como "reto,operacion,op1,op2"
+               //si respuesta del cliente == respuesta entonces ... jugador1 se mueve
+               //si la respuesta está mal, jugador 2 retrocede 1 casilla. 
+
+            
+
+            
+        } catch (Exception ex) {
+          
+        }
+    
+        this.Dado2.setEnabled(false);
+        try {
+            dout.writeUTF("dadoOn");
+        } catch (IOException ex) {
+            Logger.getLogger(Micliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+   
+    
+    }//GEN-LAST:event_Dado2
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         mover2();
@@ -681,6 +842,7 @@ public class Micliente extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Dado2;
     private javax.swing.JLabel JP2;
     private javax.swing.JTextPane Panel1;
     private javax.swing.JTextPane Panel10;
@@ -726,6 +888,5 @@ public class Micliente extends javax.swing.JFrame {
     private javax.swing.JTextField msgText;
     public javax.swing.JLabel p1;
     private javax.swing.JLabel p2;
-    private javax.swing.JButton todos;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,8 +51,7 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void mover1(){
-        listita.mover1();
-        listita.mostrarLIF();
+        listita.mover1();        
         if (cont == 0){            
             p1y1 += 76;
             this.p1.setLocation(p1x1,p1y1);
@@ -63,21 +62,19 @@ public class Server extends javax.swing.JFrame {
             p1x1 += movex1;
             this.p1.setLocation(p1x1,p1y1);
             cont--;
-            if(listita.fin.jugador1 ==true){
-                
+            if(listita.fin.jugador1){                
                 JOptionPane.showMessageDialog(null, "Felicidades", "Ganaste", JOptionPane.INFORMATION_MESSAGE);
-                
+                Dado1.setEnabled(false);
             }
         }
     }
     
-    /**
+        /**
      * Este metodo permite mover al jugador 2 de casilla
      */
     
     public void mover2(){
-        listita.mover2();
-        listita.mostrarLIF();
+        listita.mover2();        
         if (cont2 == 0){
             p2y1 += 76;
             this.p2.setLocation(p2x1,p2y1);
@@ -88,6 +85,10 @@ public class Server extends javax.swing.JFrame {
             p2x1 += movex2;
             this.p2.setLocation(p2x1,p2y1);
             cont2--;
+            if(listita.fin.jugador2){                
+                JOptionPane.showMessageDialog(null, "Gano el jugador 2", "Perdiste", JOptionPane.INFORMATION_MESSAGE);                
+                Dado1.setEnabled(false);
+            }
         }
     
     }
@@ -97,8 +98,7 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder1(){
-        listita.retroceder1();
-        listita.mostrarLIF();
+        listita.retroceder1();        
         if (cont == 3 ){            
             p1y1 -= 76;
             this.p1.setLocation(p1x1,p1y1);
@@ -119,8 +119,7 @@ public class Server extends javax.swing.JFrame {
     
     public void retroceder2(){
 
-        listita.retroceder2();
-        listita.mostrarLIF();
+        listita.retroceder2();        
         if (cont2 == 3){            
             p2y1 -= 76;
             this.p2.setLocation(p2x1,p2y1);
@@ -134,6 +133,7 @@ public class Server extends javax.swing.JFrame {
         }
         
     }
+        	
     
     
     /**
@@ -322,8 +322,7 @@ public class Server extends javax.swing.JFrame {
             this.p1.setLocation(55,115);
             getContentPane().setComponentZOrder(this.p1, 0);
             getContentPane().setComponentZOrder(this.p2, 0);
-            new MsgRead(s, i).start();
-            listita.mostrarLIF();
+            new MsgRead(s, i).start();            
             aux2 = listita.inicio;
             aux3 = listita.inicio;
             aux4 = listita.inicio;
@@ -380,10 +379,12 @@ public class Server extends javax.swing.JFrame {
                     String i = new DataInputStream(s.getInputStream()).readUTF();
                     String m = i;
                     List<String> test = Arrays.asList(i.split(","));
-                    if (i.equals("mover1")){ //Este if separa una solicitud de monto de un mensaje normal
-                        dout.writeUTF(i);
-                        mover1();
-                    } else if (i.equals("correcto")) {
+                    if(i.equals("mover2")){
+                        mover2();
+                    }else if(m.equals("retroceder2")){
+                        retroceder2();
+                        
+                    }else if (i.equals("correcto")) {
                         dout.writeUTF("correcto");
                         mover1();
                         
@@ -398,10 +399,70 @@ public class Server extends javax.swing.JFrame {
                         }else{
                             mover1();  
                         }
+                    }else if(m.equals("retroceder2")){
+                        retroceder2();
+                    } else if (m.equals("correcto2")) {
+                        mover2();
+                    } else if (m.equals("incorrecto2")) {
+                        while(!aux6.jugador1){
+                            aux6 = aux6.siguiente;
+                        }
+                        if(aux6.anterior != null ){
+                            mover2();
+                            retroceder1();
+                        }else{
+                            mover2();  
+                        }
+                        
+                            
+                    }else if (test.get(0).equals("suma")) {
+                        int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
+                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                        if(resultado3 == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto2");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("incorrecto2");
+                        }  
+                    }else if (test.get(0).equals("resta")) {
+                            int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
+                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                            if(resultado3 == r) {
+                                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                                dout.writeUTF("correcto2");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                                dout.writeUTF("incorrecto2");
+                            }  
+                    }else if (test.get(0).equals("multiplicacion")) {
+                            int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
+                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                            if(resultado3 == r) {
+                                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                                dout.writeUTF("correcto2");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                                dout.writeUTF("incorrecto2");
+                            }  
+                    }else if (test.get(0).equals("division")) {
+                            int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
+                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" / "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                            if(resultado3 == r) {
+                                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                                dout.writeUTF("correcto2");
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                                dout.writeUTF("incorrecto2");
+                            }  
+                        } else if (m.equals("dadoOn")) {
+                            Dado1.setEnabled(true);
                     }
-                } catch (Exception ex) {
+
+                    } catch (Exception ex) {
                     ex.printStackTrace();
                 }
+                
             }
         
         }
@@ -488,7 +549,7 @@ public class Server extends javax.swing.JFrame {
         p1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Dado1 = new javax.swing.JButton();
         JP1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -549,9 +610,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\jose\\OneDrive - Estudiantes ITCR\\ordenador\\Documentos\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jButton1.setText("1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -567,10 +628,10 @@ public class Server extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Dado");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        Dado1.setText("Dado");
+        Dado1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                Dado1ActionPerformed(evt);
             }
         });
 
@@ -594,7 +655,7 @@ public class Server extends javax.swing.JFrame {
                                         .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton4))
+                                    .addComponent(Dado1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
@@ -686,7 +747,7 @@ public class Server extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(Dado1)
                 .addGap(22, 22, 22))
         );
 
@@ -722,7 +783,7 @@ public class Server extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void Dado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado1ActionPerformed
         try {
             
             Random r = new Random();
@@ -737,11 +798,12 @@ public class Server extends javax.swing.JFrame {
                 mover1();
                 ValorDado--;
             }
-            
+            aux4 = listita.inicio;
             while(aux4.jugador1==false){
                 aux4 = aux4.siguiente;
                 
             }
+            System.out.println(aux4.tipo);
             
             if(aux4.tipo == "Túnel"){
                 int tl = r.nextInt(3)+1;
@@ -768,11 +830,19 @@ public class Server extends javax.swing.JFrame {
                 int op2 = r.nextInt(50) + 1;
                 int operando = r.nextInt(4) + 1;
                 String Sop1 = Integer.toString(op1);
-                String Sop2 = Integer.toString(op2);
-                //String Sop = Integer.toString(operando);
-                String Sop = "suma";
+                String Sop2 = Integer.toString(op2);                
+                String Sop = "";
+                if(operando == 1){
+                    Sop = "suma";
+                }else if(operando == 2){
+                    Sop = "resta";
+                }else if(operando == 3){
+                    Sop = "multiplicacion";
+                }else if(operando == 4){
+                    Sop = "division";
+                }                
                 JOptionPane.showMessageDialog(null, "Reto para el jugador 2", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                try {
+                try {                    
                     dout.writeUTF(Sop + "," + Sop1 + "," + Sop2); // "suma,10,5"
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "ERRRRRRRRRRROR", "Errrrr", JOptionPane.INFORMATION_MESSAGE);
@@ -808,17 +878,23 @@ public class Server extends javax.swing.JFrame {
           
         }
     
-        
+        this.Dado1.setEnabled(false);
+        try {
+            dout.writeUTF("dadoOn");
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     
         
    
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_Dado1ActionPerformed
 
     /**
      * @param args los argumentos de la línea de comando
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Dado1;
     private javax.swing.JLabel JP1;
     private javax.swing.JLabel JP2;
     private javax.swing.JTextPane Panel1;
@@ -839,7 +915,6 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JTextPane Panel9;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

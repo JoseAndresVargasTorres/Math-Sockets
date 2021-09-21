@@ -22,14 +22,14 @@ public class ServerRegister extends javax.swing.JFrame {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
+        
         jPanel1 = new javax.swing.JPanel();
         name = new javax.swing.JTextField();
         join = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+        setResizable(false);
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         name.setBackground(new java.awt.Color(204, 204, 204));

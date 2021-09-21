@@ -163,10 +163,16 @@ public class ListaDoble {
     
     public NodoDoble getPos(){
        NodoDoble aux = inicio;
-       while(aux.jugador1 == false){
+       while(!aux.jugador1){
            aux = aux.siguiente;
        }
        return aux;
     }
-    
+    public NodoDoble getPos2(){
+       NodoDoble aux = inicio;
+       while(!aux.jugador2){
+           aux = aux.siguiente;
+       }
+       return aux;
+    }
 }
