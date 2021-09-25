@@ -4,7 +4,7 @@ public class ListaDoble {
     public NodoDoble inicio, fin;
     
     /**
-     * En este metodo se definen los atributos de inicio y fin
+     * En este método se definen los atributos de inicio y fin
      */  
 
     public ListaDoble() {
@@ -12,14 +12,14 @@ public class ListaDoble {
     }
 
     /**
-     * Metodo para saber cuando la lista está vacía
+     * Método para saber cuando la lista está vacía
      * @return booleano
      */
     public boolean estVacia() {
         return inicio == null;
     }
     /**
-     * Metodo para obtener el panel de cada casilla
+     * Método para obtener el panel de cada casilla
      * @return panel
      */
     public Object getPan() {
@@ -27,7 +27,7 @@ public class ListaDoble {
     }
 
     /**
-     * Metodo para mover el jugador1 de nodo
+     * Método para mover el jugador1 de nodo
      */
     public void mover1() {
         NodoDoble aux = inicio;
@@ -42,7 +42,7 @@ public class ListaDoble {
         
     }
     /**
-     * Metodo para mover el jugador 2 de nodo
+     * Método para mover el jugador 2 de nodo
      */
     public void mover2() {
         NodoDoble aux = inicio;
@@ -54,7 +54,7 @@ public class ListaDoble {
         }
     
     /**
-     * Metodo para retroceder al jugador 1 en la lista 
+     * Método para retroceder al jugador 1 en la lista 
      */
     public void retroceder1(){
            NodoDoble aux = fin;
@@ -69,7 +69,7 @@ public class ListaDoble {
        }
     
     /**
-     * Metodo para retroceder al jugador 1 en la lista 
+     * Método para retroceder al jugador 1 en la lista 
      */
     public void retroceder2(){
            NodoDoble aux = fin;
@@ -86,7 +86,7 @@ public class ListaDoble {
     
 
     /**
-     * Metodo para agregar nodos al final
+     * Método para agregar nodos al final
      * @param casilla este atributo recibe el tipo de casilla
      * @param panel este atributo recibe un JPanel
      * @param isjugador1 este atributo permite localizar al jugador 1     
@@ -101,7 +101,7 @@ public class ListaDoble {
         }
     }
     /**
-     * Metodo para agregar nodos al inicio
+     * Método para agregar nodos al inicio
      * @param casilla este atributo recibe el tipo de casilla
      * @param panel este atributo recibe un JPanel
      * @param isjugador1 este atributo permite localizar al jugador 1     
@@ -116,7 +116,7 @@ public class ListaDoble {
         }
     }
     /**
-     * Metodo para mostrar la lista de inicio a fin
+     * Método para mostrar la lista de inicio a fin
      */
     public void mostrarLIF(){
         if (!estVacia()) {
@@ -132,7 +132,7 @@ public class ListaDoble {
         }
     }
     /**
-     * Metodo para mostrar la lista de fin a inicio
+     * Método para mostrar la lista de fin a inicio
      */
     public void mostrarLFI(){
         if (!estVacia()) {
@@ -148,7 +148,7 @@ public class ListaDoble {
     }
     
     /**
-     * Metodo para eliminar al primero de la lista
+     * Método para eliminar al primero de la lista
      * @return null
      */
     public NodoDoble deleteFirst() {
@@ -161,6 +161,10 @@ public class ListaDoble {
         }
     }
     
+    /**
+     * Método para obtener la posición del jugador 1
+     * @return NodoDoble
+     */        
     public NodoDoble getPos(){
        NodoDoble aux = inicio;
        while(!aux.jugador1){
@@ -168,6 +172,11 @@ public class ListaDoble {
        }
        return aux;
     }
+    
+    /**
+     * Método para obtener la posición del jugador 2
+     * @return NodoDoble
+     */
     public NodoDoble getPos2(){
        NodoDoble aux = inicio;
        while(!aux.jugador2){

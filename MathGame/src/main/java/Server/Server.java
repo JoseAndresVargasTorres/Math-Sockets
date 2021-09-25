@@ -134,12 +134,15 @@ public class Server extends javax.swing.JFrame {
     }
     
     /**
-     * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, ademas de la creacion de las casillas y algunos de sus metodos.  
+     * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, 
+     * ademas de la creacion de las casillas y algunos de sus metodos.  
      */  
     
     
     public Server() { initComponents();
-        //Aqui se realiza la conexion que permite recibir del cliente, además de agregar las casillas y colocarlas aleatoriamente.
+        /**
+         * Aqui se realiza la conexion que permite recibir del cliente, además de agregar las casillas y colocarlas aleatoriamente.
+         */
         
     }
     Server(String jugador1){
@@ -216,14 +219,9 @@ public class Server extends javax.swing.JFrame {
                     tunel--;
                 }                                                          
             }
-            //Para implementar los metodos de reto, tunel y 
-            
-                
-            
-            
-           
-        
-        //Se realiza cuando un jugador cae en la casilla de tunel. Hace que el jugador se mueva n numero aleatorio de casillas.
+                                                                                  
+        //Se instanician algunos aux que permitiran realizar correctamente algunos de los métodos de abajo
+        //Además, algunos paneles son editados y se inicializa el método para leer mensajes
         
             this.Panel16.setEditable(false);
             this.Panel16.setText("16.Final");            
@@ -246,8 +244,7 @@ public class Server extends javax.swing.JFrame {
     }
 
     /**
-     * Esta clase es para leer y mostrar los diferentes mensajes enviados por los
-     * clientes, además detecta si se solicita un monto
+     * Esta clase es para leer y mostrar los diferentes mensajes enviados por el cliente
      */
     class MsgRead extends Thread {
         Socket s;
@@ -262,8 +259,7 @@ public class Server extends javax.swing.JFrame {
             this.ID = ID;
         }
         /**
-         * Este método se encarga de recibir los paquetes de datos (mensajes)
-         * y los envía a los clientes correspondientes
+         * Este método se encarga de recibir los paquetes de datos (mensajes)         
          */
         public void run() {
             NodoDoble aux = listita.inicio;
@@ -278,10 +274,11 @@ public class Server extends javax.swing.JFrame {
                     new DataOutputStream(s.getOutputStream()).writeUTF(i);
                 } catch (IOException ex) {
                     Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
+                }                                
             }
+            
+            //Este ciclo permite ejecutar diferentes métodos dependiendo de lo que reciba el servidor
+            //Como lo pueden ser los retos que se le envian al otro jugador, entre otros métodos
             while (true) {
                 try {
                     
@@ -380,13 +377,11 @@ public class Server extends javax.swing.JFrame {
     
     /**
      * Esta clase es para crear una lista con los clientes conectados
-     * ademas permite implementar un método para enviar los mensajes a un
-     * cliente en concreto
+     * que en este caso solo seria únicamente el jugador 2
      */
     class PrepareClientList extends Thread {
         /**
-         * Este método se encarga de añadir los clientes conectados a una lista
-         * proyectada en la interfaz de los clientes
+         * Este método se encarga de añadir al cliente conectado         
          */
         public void run() {
             try {
@@ -415,7 +410,9 @@ public class Server extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * La siguiente línea suprime algunas advertencias del compilador
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -520,9 +517,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         JP3.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
         JP3.setText("Jugador 1");
@@ -539,8 +536,6 @@ public class Server extends javax.swing.JFrame {
 
         JP1.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         JP1.setText("...................");
-
-        p3.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -599,7 +594,7 @@ public class Server extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(8, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JP1)
                     .addComponent(JP3))
@@ -667,9 +662,14 @@ public class Server extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Aqui se encuentra lo que se ejecuta al presionar el botón del dado del jugador 1
+     * @param evt hace referencia al evento del botón
+     */
     private void Dado1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado1
         try {
-            
+            //Se crea un int que será el valor del dado e irá de 1 a 4
+            //También se crea un random que permitira que el valor del dado sea aleatorio, además de implementarse en algunas funciones
             Random r = new Random();
             int ValorDado = r.nextInt(4)+1;
             //String m = "reto";
@@ -677,6 +677,8 @@ public class Server extends javax.swing.JFrame {
             System.out.println("---------------------------*-------------");
             System.out.println(ValorDado);
             System.out.println("---------------------------*-------------");
+            
+            //Mueve al jugador la cantidad de casillas que indique al dado y permite delimitar su movimiento si llega al final del juego
             while (ValorDado>0 && listita.getPos().siguiente != null  ) {
                 dout.writeUTF("mover1");
                 mover1();
@@ -689,6 +691,7 @@ public class Server extends javax.swing.JFrame {
             }
             System.out.println(aux4.tipo);
             
+            //Funcionalidad de las casillas tipo Túnel
             if(aux4.tipo == "Túnel"){
                 int tl = r.nextInt(3)+1;
                 String tltext = Integer.toString(tl);
@@ -700,6 +703,7 @@ public class Server extends javax.swing.JFrame {
                 }
             }
             
+            //Funcionalidad de las casillas tipo Trampa
             else if(aux4.tipo == "Trampa") {
                 int tp = r.nextInt(3)+1;
                 String tptext = Integer.toString(tp);
@@ -709,7 +713,10 @@ public class Server extends javax.swing.JFrame {
                     retroceder1();
                     tp--;
                 }
-            }else if(aux4.tipo == "Reto") {
+            }
+            
+            //Funcionalidad de las casillas tipo Reto
+            else if(aux4.tipo == "Reto") {
                 int op1 = r.nextInt(50) + 1;
                 int op2 = r.nextInt(50) + 1;
                 int operando = r.nextInt(4) + 1;
@@ -761,7 +768,8 @@ public class Server extends javax.swing.JFrame {
         } catch (Exception ex) {
           
         }
-    
+        
+        //Esto permite desabilitar el botón del dado
         this.Dado1.setEnabled(false);
         try {
             dout.writeUTF("dadoOn");
@@ -772,7 +780,7 @@ public class Server extends javax.swing.JFrame {
     }//GEN-LAST:event_Dado1
 
     /**
-     * @param args los argumentos de la línea de comando
+     * Aqui se crean los elementos utilizados en la interfaz
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

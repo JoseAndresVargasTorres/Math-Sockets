@@ -36,8 +36,9 @@ public class Micliente extends javax.swing.JFrame {
     ListaDoble listita = new ListaDoble();
     NodoDoble aux6;
     NodoDoble aux4;
+    
     /**
-     * Metodo que permite mover al jugador de posicion
+     * Metodo que permite mover al jugador 1 de posicion
      */
     public void mover1(){
         listita.mover1();
@@ -58,6 +59,10 @@ public class Micliente extends javax.swing.JFrame {
             }
         }
     }
+    
+    /**
+     * Metodo que permite mover al jugador 2 de posicion
+     */
     public void mover2(){
         listita.mover2();
         if (cont2 == 0){
@@ -78,6 +83,9 @@ public class Micliente extends javax.swing.JFrame {
     
     }
     
+    /**
+     * Metodo que permite retroceder de casilla al jugador 1  
+     */
     public void retroceder1(){
         listita.retroceder1();
         listita.mostrarLIF();
@@ -96,7 +104,7 @@ public class Micliente extends javax.swing.JFrame {
     }
     
     /**
-     * Este metodo permite al jugador 2 retroceder de casilla
+     * Metodo que permite retroceder de casilla al jugador 2  
      */
     
     public void retroceder2(){
@@ -127,7 +135,7 @@ public class Micliente extends javax.swing.JFrame {
 
     /**
      * Este método asigna el usuario y el socket al cliente
-     *
+     * También aqui se crean las casillas enlazadas a los nodos
      * @param i el nombre del usuario en el cliente
      * @param s el socket que utiliza el cliente
      */
@@ -174,8 +182,8 @@ public class Micliente extends javax.swing.JFrame {
      */
     class Read extends Thread {
         /**
-         * Este método envía los mensajes y detecta si se solicitó un monto,
-         * respondiendo automáticamente el resultado del cálculo del monto
+         * Método que permite al cliente recibir mensajes del servidor
+         * y ejecutar un método dependiendo del mensaje recibido
          */
         public void run() {
             NodoDoble aux = listita.inicio;
@@ -335,7 +343,9 @@ public class Micliente extends javax.swing.JFrame {
             }
         }
     }
-
+    /**
+     * La siguiente línea suprime algunas advertencias del compilador
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -454,9 +464,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         jLabel2.setText("Host:");
@@ -466,8 +476,6 @@ public class Micliente extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
         jLabel3.setText("Jugador 2");
-
-        p3.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -522,7 +530,7 @@ public class Micliente extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(p3)
                                 .addGap(41, 41, 41)))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +553,7 @@ public class Micliente extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(p3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -603,13 +611,13 @@ public class Micliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Este método implementa un botón con el cual seleccionar a todos los
-     * clientes para enviar los mensajes de forma general
-     *
+     * Este método implementa un botón con el cual se ejecutan las funciones del dado
+     * y las funciones de cada casilla dependiendo de donde caiga el jugador     
      * @param evt evento consecuente al pulsar el botón Todos
      */
     private void Dado2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado2
         try {
+            //Se crea un random y un int que determinara el valor del dado de forma aleatoria en un rango de 1 a 4
             listita.mostrarLIF();
             Random r = new Random();
             int ValorDado = r.nextInt(4)+1;
@@ -618,6 +626,8 @@ public class Micliente extends javax.swing.JFrame {
             System.out.println("---------------------------*-------------");
             System.out.println(ValorDado);
             System.out.println("---------------------------*-------------");
+            
+            //Este ciclo permite mover al jugador dependiendo el valor del dado            
             while (ValorDado>0 && listita.getPos().siguiente != null  ) {
                 dout.writeUTF("mover2");
                 mover2();
@@ -630,6 +640,7 @@ public class Micliente extends javax.swing.JFrame {
             }
             System.out.println(aux4.tipo);
             
+            //Funcionalidad de las casillas tipo Túnel
             if(aux4.tipo.equals("Túnel")){                
                 int tl = r.nextInt(3)+1;
                 String tltext = Integer.toString(tl);
@@ -641,6 +652,7 @@ public class Micliente extends javax.swing.JFrame {
                 }
             }
             
+            //Funcionalidad de las casillas tipo Trampa
             else if(aux4.tipo.equals("Trampa")) {                
                 int tp = r.nextInt(3)+1;
                 String tptext = Integer.toString(tp);
@@ -650,7 +662,10 @@ public class Micliente extends javax.swing.JFrame {
                     retroceder2();
                     tp--;
                 }
-            }else if(aux4.tipo.equals("Reto")) {                
+            }
+            
+            //Funcionalidad de las casillas tipo Reto
+            else if(aux4.tipo.equals("Reto")) {                
                 int op1 = r.nextInt(50) + 1;
                 int op2 = r.nextInt(50) + 1;
                 int operando = r.nextInt(4) + 1;
@@ -678,7 +693,7 @@ public class Micliente extends javax.swing.JFrame {
         } catch (Exception ex) {
           
         }
-    
+        //Esto permite desabilitar el botón del dado
         this.Dado2.setEnabled(false);
         try {
             dout.writeUTF("dadoOn");
@@ -704,10 +719,10 @@ public class Micliente extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(Micliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }// Evento al cerrar la ventana
+        }
 
     /**
-     * @param args los argumentos de la línea de comando
+     * Aqui se crean los elementos utilizados en la interfaz     
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
