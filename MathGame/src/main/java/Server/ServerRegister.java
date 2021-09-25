@@ -138,7 +138,6 @@ public class ServerRegister extends javax.swing.JFrame {
             this.dispose();
 
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }                        
     /**
@@ -172,10 +171,8 @@ public class ServerRegister extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Crea y proyecta la interfaz */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ServerRegister().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ServerRegister().setVisible(true);
         });
     }
 
