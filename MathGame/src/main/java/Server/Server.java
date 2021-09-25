@@ -31,14 +31,14 @@ public class Server extends javax.swing.JFrame {
     /**
      * Aqui se encuneran los metodos y atributos de utilizados en la clase server
      */
-    int p1x1 = 55;
-    int p2x1 = 106;
-    int p1y1 = 115;
-    int p2y1 = 115;
+    int p1x1 = 40;
+    int p2x1 = 96;
+    int p1y1 = 120;
+    int p2y1 = 120;
     int cont = 3;
     int cont2 = 3;
-    int movex1 = 105;
-    int movex2 = 105;
+    int movex1 = 104;
+    int movex2 = 104;
     ListaDoble listita = new ListaDoble();
     NodoDoble auxi1 ;
     NodoDoble aux2;
@@ -53,7 +53,7 @@ public class Server extends javax.swing.JFrame {
     public void mover1(){
         listita.mover1();        
         if (cont == 0){            
-            p1y1 += 76;
+            p1y1 += 75;
             this.p1.setLocation(p1x1,p1y1);
             cont = 3;
             movex1 *= -1;            
@@ -76,7 +76,7 @@ public class Server extends javax.swing.JFrame {
     public void mover2(){
         listita.mover2();        
         if (cont2 == 0){
-            p2y1 += 76;
+            p2y1 += 75;
             this.p2.setLocation(p2x1,p2y1);
             cont2 = 3;
             movex2 *= -1;
@@ -86,7 +86,7 @@ public class Server extends javax.swing.JFrame {
             this.p2.setLocation(p2x1,p2y1);
             cont2--;
             if(listita.fin.jugador2){                
-                JOptionPane.showMessageDialog(null, "Gano el jugador 2", "Perdiste", JOptionPane.INFORMATION_MESSAGE);                
+                JOptionPane.showMessageDialog(null, "Ganó el jugador 2", "Perdiste", JOptionPane.INFORMATION_MESSAGE);                
                 Dado1.setEnabled(false);
             }
         }
@@ -133,95 +133,6 @@ public class Server extends javax.swing.JFrame {
         }
         
     }
-        	
-    
-    
-    /**
-     * En este metodo se encuentra la logica del juego, especificamente, las acciones que debe realizar el jugador dependiendo si su casilla es de reto, tunel o trampa.
-     * @param jugador es el jugador al que afectara la accion, dependiendo de la casilla donde cayo.
-     */
-
-    /*public void Partelogica(String jugador){
-        Random t = new Random();
-        
-        //System.out.println("******************************************");
-        //System.out.println(auxi1.jugador1); 
-
-        if(auxi1.tipo == "Reto" && jugador== "jugador1" ){
-        System.out.println("funca");
-        int op1 = t.nextInt(50)+1;
-        int op2 = t.nextInt(50)+1;
-        int operando = t.nextInt(4)+1;
-
-        if(operando == 1){
-            int resultado1 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ op1 +" + "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-            if(resultado1 == op1 + op2){
-                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                listita.mover2();                  
-
-            }else{
-                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                //listita.mover2();
-            }
-        }
-
-        if(operando == 2){
-            int resultado2 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ op1 +" - "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-            if(resultado2 == op1 - op2){
-                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                listita.mover2();                  
-
-            }else{
-            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-            listita.mover1();
-            //listita.mover2();
-            }
-        }
-        if(operando == 3){
-            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ op1 +" * "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-            if(resultado3 == op1 * op2){
-                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                listita.mover2();                  
-
-            }else{
-            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-            listita.mover1();
-            //listita.mover2();
-
-            }
-        }
-        if(operando == 4){
-            int resultado4 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ op1 +" ÷ "+ op2, "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-            if(resultado4 == op1 / op2){
-                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                listita.mover1();
-                listita.mover2();                  
-
-            }else{
-            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-            listita.mover1();
-            //listita.mover2();
-            }
-        }    
-    }else{
-        return;
-    }
-            
-            
-        
-        //Se realiza si algun jugador cae en la casilla de reto, permite que un jugador le envie un reto matematico aleatorio al otro.
-       
-        /*
-        
-        
-            
-    }
-    
-    */
     
     /**
      * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, ademas de la creacion de las casillas y algunos de sus metodos.  
@@ -242,14 +153,13 @@ public class Server extends javax.swing.JFrame {
             String i = new DataInputStream(s.getInputStream()).readUTF();
             this.JP1.setText("Bienvenido: "+jugador1);
             this.JP2.setText(i+" joined!");
+            dout.writeUTF("p1,"+jugador1);
             this.Panel1.setEditable(false);
             this.Panel1.setText("1.Inicio");
             int contador = 2;
-            
             int reto = 7;
             int trampa = 4;
             int tunel = 3;
-            
             listita.agregarAlInicio("Inicio", Panel1, true, true);            
             listita.agregarAlFinal("Error", Panel2, false, false);
             listita.agregarAlFinal("Error", Panel3, false, false);            
@@ -318,8 +228,8 @@ public class Server extends javax.swing.JFrame {
         
             this.Panel16.setEditable(false);
             this.Panel16.setText("16.Final");            
-            this.p2.setLocation(104,115);
-            this.p1.setLocation(55,115);
+            this.p2.setLocation(p2x1,p2y1);
+            this.p1.setLocation(p1x1,p1y1);
             getContentPane().setComponentZOrder(this.p1, 0);
             getContentPane().setComponentZOrder(this.p2, 0);
             new MsgRead(s, i).start();            
@@ -417,7 +327,7 @@ public class Server extends javax.swing.JFrame {
                             
                     }else if (test.get(0).equals("suma")) {
                         int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
-                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
                         if(resultado3 == r) {
                             JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("correcto2");
@@ -427,7 +337,7 @@ public class Server extends javax.swing.JFrame {
                         }  
                     }else if (test.get(0).equals("resta")) {
                             int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
-                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2)+ "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE)) ;
                             if(resultado3 == r) {
                                 JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                                 dout.writeUTF("correcto2");
@@ -437,7 +347,7 @@ public class Server extends javax.swing.JFrame {
                             }  
                     }else if (test.get(0).equals("multiplicacion")) {
                             int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
-                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2)+ "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE)) ;
                             if(resultado3 == r) {
                                 JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                                 dout.writeUTF("correcto2");
@@ -447,7 +357,7 @@ public class Server extends javax.swing.JFrame {
                             }  
                     }else if (test.get(0).equals("division")) {
                             int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
-                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" / "+ test.get(2), "Reto", JOptionPane.PLAIN_MESSAGE)) ;
+                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" / "+ test.get(2)+ "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE)) ;
                             if(resultado3 == r) {
                                 JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                                 dout.writeUTF("correcto2");
@@ -547,8 +457,7 @@ public class Server extends javax.swing.JFrame {
         JP2 = new javax.swing.JLabel();
         p2 = new javax.swing.JLabel();
         p1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        JP3 = new javax.swing.JLabel();
         Dado1 = new javax.swing.JButton();
         JP1 = new javax.swing.JLabel();
 
@@ -607,35 +516,27 @@ public class Server extends javax.swing.JFrame {
         Panel4.setFocusable(false);
         jScrollPane17.setViewportView(Panel4);
 
-        JP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JP2.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         JP2.setText("...................");
 
         p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
 
         p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
 
-        jButton1.setText("1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        JP3.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
+        JP3.setText("HOST: P1");
 
-        jButton2.setText("2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
+        Dado1.setBackground(new java.awt.Color(255, 204, 204));
+        Dado1.setFont(new java.awt.Font("Unispace", 0, 14)); // NOI18N
         Dado1.setText("Dado");
+        Dado1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         Dado1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Dado1ActionPerformed(evt);
+                Dado1(evt);
             }
         });
 
-        JP1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        JP1.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         JP1.setText("...................");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -643,82 +544,70 @@ public class Server extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 38, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Dado1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(p1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(Dado1))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane7, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane12, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane13, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane15, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane14, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane17, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton2)))
-                        .addGap(44, 44, 44))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(JP1)
+                            .addComponent(JP2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(JP1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane12, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane13, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(p1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JP2)
-                        .addGap(35, 35, 35))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane15, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane14, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane17, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(p2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(JP3)))
+                .addGap(32, 32, 32))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(p2)
-                                    .addComponent(p1))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(JP1)))
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(JP1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(JP2)
-                        .addGap(36, 36, 36)))
-                .addGap(6, 6, 6)
+                        .addGap(13, 13, 13))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(JP3)
+                        .addGap(18, 18, 18)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane17, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -726,7 +615,7 @@ public class Server extends javax.swing.JFrame {
                         .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -734,7 +623,7 @@ public class Server extends javax.swing.JFrame {
                         .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -742,13 +631,16 @@ public class Server extends javax.swing.JFrame {
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Dado1)
-                .addGap(22, 22, 22))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Dado1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(p1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(p2, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -765,25 +657,7 @@ public class Server extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (aux2.siguiente!=null){
-            mover1();
-            aux2 = aux2.siguiente;
-
-        }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (aux3.siguiente!=null){
-            mover2();
-            aux3 = aux3.siguiente;
-
-        }
-
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void Dado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado1ActionPerformed
+    private void Dado1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado1
         try {
             
             Random r = new Random();
@@ -884,10 +758,8 @@ public class Server extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
-   
-    }//GEN-LAST:event_Dado1ActionPerformed
+
+    }//GEN-LAST:event_Dado1
 
     /**
      * @param args los argumentos de la línea de comando
@@ -897,6 +769,7 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JButton Dado1;
     private javax.swing.JLabel JP1;
     private javax.swing.JLabel JP2;
+    private javax.swing.JLabel JP3;
     private javax.swing.JTextPane Panel1;
     private javax.swing.JTextPane Panel10;
     private javax.swing.JTextPane Panel11;
@@ -913,8 +786,6 @@ public class Server extends javax.swing.JFrame {
     private javax.swing.JTextPane Panel7;
     private javax.swing.JTextPane Panel8;
     private javax.swing.JTextPane Panel9;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
