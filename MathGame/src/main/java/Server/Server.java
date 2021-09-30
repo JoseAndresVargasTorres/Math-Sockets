@@ -57,7 +57,7 @@ public class Server extends javax.swing.JFrame {
             cont = 3;
             movex1 *= -1;            
         }else{
-            System.out.println(cont);
+            
             p1x1 += movex1;
             this.p1.setLocation(p1x1,p1y1);
             cont--;
@@ -80,7 +80,7 @@ public class Server extends javax.swing.JFrame {
             cont2 = 3;
             movex2 *= -1;
         }else{
-            System.out.println(cont2);
+            
             p2x1 += movex2;
             this.p2.setLocation(p2x1,p2y1);
             cont2--;
@@ -105,7 +105,7 @@ public class Server extends javax.swing.JFrame {
                 cont = 0;
                 movex1 *= -1;            
             }else{
-                System.out.println("mover1_contador_re: " + cont);
+                
                 p1x1 -= movex1;
                 this.p1.setLocation(p1x1,p1y1);
                 cont++;
@@ -127,7 +127,7 @@ public class Server extends javax.swing.JFrame {
                 cont2 = 0;
                 movex2 *= -1;            
             }else{
-                System.out.println("mover1_contador_re: " + cont);
+                
                 p2x1 -= movex2;
                 this.p2.setLocation(p2x1,p2y1);
                 cont2++;
@@ -190,7 +190,7 @@ public class Server extends javax.swing.JFrame {
                 String index = Integer.toString(contador);
                 Random r = new Random();
                 int valorDado = r.nextInt(9)+1;  // Entre 0 y 5, más 1.
-                //System.out.println(valorDado);
+                
 
                 //Coloca de manera aleatoria las casillas de reto.
                 if (valorDado == 3 && reto != 0 || valorDado == 6 && reto != 0 || valorDado == 9 && reto != 0){
@@ -237,7 +237,7 @@ public class Server extends javax.swing.JFrame {
             aux4 = listita.inicio;
             aux5 = listita.inicio;
             aux6 = listita.inicio;
-            System.out.println("-----------------------------------------------");
+            
             
             
         } catch (Exception ex) {
@@ -471,6 +471,7 @@ public class Server extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
         setFocusable(false);
+        setFocusableWindowState(false);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -686,9 +687,7 @@ public class Server extends javax.swing.JFrame {
             int ValorDado = r.nextInt(4)+1;
             //String m = "reto";
             
-            System.out.println("---------------------------*-------------");
-            System.out.println(ValorDado);
-            System.out.println("---------------------------*-------------");
+            
             
             //Mueve al jugador la cantidad de casillas que indique al dado y permite delimitar su movimiento si llega al final del juego
             while (ValorDado>0 && listita.getPos().siguiente != null  ) {
@@ -701,7 +700,7 @@ public class Server extends javax.swing.JFrame {
                 aux4 = aux4.siguiente;
                 
             }
-            System.out.println(aux4.tipo);
+            
             
             //Funcionalidad de las casillas tipo Túnel
             if(aux4.tipo == "Túnel"){

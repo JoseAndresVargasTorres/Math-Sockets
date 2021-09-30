@@ -42,14 +42,14 @@ public class Micliente extends javax.swing.JFrame {
      */
     public void mover1(){
         listita.mover1();
-        System.out.println("contador adelante "+ cont);
+        
         if (cont == 0){            
             p1y1 += 75;
             this.p1.setLocation(p1x1,p1y1);
             cont = 3;
             movex1 *= -1; 
         } else {
-            System.out.println(cont);
+            
             p1x1 += movex1;
             this.p1.setLocation(p1x1,p1y1);
             cont--;
@@ -71,7 +71,7 @@ public class Micliente extends javax.swing.JFrame {
             cont2 = 3;
             movex2 *= -1;
         }else{
-            System.out.println(cont2);
+            
             p2x1 += movex2;
             this.p2.setLocation(p2x1,p2y1);
             cont2--;
@@ -89,14 +89,14 @@ public class Micliente extends javax.swing.JFrame {
     public void retroceder1(){
         if (!listita.getPos().tipo.equals("Inicio")){
             listita.retroceder1();
-            listita.mostrarLIF();
+            //listita.mostrarLIF();
             if (cont == 3 ){            
                 p1y1 -= 76;
                 this.p1.setLocation(p1x1,p1y1);
                 cont = 0;
                 movex1 *= -1;            
             }else{
-                System.out.println("mover1_contador_re: " + cont);
+               
                 p1x1 -= movex1;
                 this.p1.setLocation(p1x1,p1y1);
                 cont++;
@@ -111,14 +111,14 @@ public class Micliente extends javax.swing.JFrame {
     public void retroceder2(){
         if (!listita.getPos2().tipo.equals("Inicio")){
             listita.retroceder2();
-            listita.mostrarLIF();
+            //listita.mostrarLIF();
             if (cont2 == 3){            
                 p2y1 -= 76;
                 this.p2.setLocation(p2x1,p2y1);
                 cont2 = 0;
                 movex2 *= -1;            
             }else{
-                System.out.println("mover1_contador_re: " + cont);
+                
                 p2x1 -= movex2;
                 this.p2.setLocation(p2x1,p2y1);
                 cont2++;
@@ -192,7 +192,6 @@ public class Micliente extends javax.swing.JFrame {
             while (true) {
                 try {
                     String m = din.readUTF();                    
-                    System.out.println(m);
                     String i = m;
                     List<String> test = Arrays.asList(i.split(","));
                     if (m.equals("mover1")){
@@ -409,11 +408,14 @@ public class Micliente extends javax.swing.JFrame {
         p3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setFocusable(false);
+        setFocusableWindowState(false);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setAlignmentX(0.0F);
         jPanel1.setAlignmentY(0.0F);
+        jPanel1.setFocusable(false);
 
         jLabel1.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         jLabel1.setText("Bienvenido:");
@@ -635,14 +637,12 @@ public class Micliente extends javax.swing.JFrame {
     private void Dado2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado2
         try {
             //Se crea un random y un int que determinara el valor del dado de forma aleatoria en un rango de 1 a 4
-            listita.mostrarLIF();
+            //listita.mostrarLIF();
             Random r = new Random();
             int ValorDado = r.nextInt(4)+1;
             //String m = "reto";
             
-            System.out.println("---------------------------*-------------");
-            System.out.println(ValorDado);
-            System.out.println("---------------------------*-------------");
+            
             
             //Este ciclo permite mover al jugador dependiendo el valor del dado            
             while (ValorDado>0 && listita.getPos().siguiente != null  ) {
@@ -655,7 +655,7 @@ public class Micliente extends javax.swing.JFrame {
                 aux4 = aux4.siguiente;
                 
             }
-            System.out.println(aux4.tipo);
+            
             
             //Funcionalidad de las casillas tipo Túnel
             if(aux4.tipo.equals("Túnel")){                
