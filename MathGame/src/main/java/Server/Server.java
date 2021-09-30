@@ -517,9 +517,9 @@ public class Server extends javax.swing.JFrame {
         JP2.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         JP2.setText("...................");
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\ganon.png"));
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\link.png"));
 
         JP3.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
         JP3.setText("Jugador 1");
@@ -536,6 +536,8 @@ public class Server extends javax.swing.JFrame {
 
         JP1.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         JP1.setText("...................");
+
+        p3.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\link.png"));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -739,34 +741,8 @@ public class Server extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "ERRRRRRRRRRROR", "Errrrr", JOptionPane.INFORMATION_MESSAGE);
                 }
                 
-            }
-            /*
-            else if(aux.tipo == "Reto"){
-                int op1 = t.nextInt(50)+1;
-                int op2 = t.nextInt(50)+1;
-                int operando = t.nextInt(4)+1;
-                
-            
-            }
-            */
-            // Que el dado haga la función de mover el jugador en ambas ventanas se desactiva
-            
-            // Hasta que el dado llegue a 0  
-                //Cuando llega a 0 se evalua la casilla donde quedó el jugador 1
-                // aux = inicio
-               //while !aux.jugador1
-               //aux = aux.siguiente
-               //aux.tipo / reto trampa ....
-               //if aux.tipo == reto{
-               //crea los operandos, resuelte el problema y le envía los datos al cliente como "reto,operacion,op1,op2"
-               //si respuesta del cliente == respuesta entonces ... jugador1 se mueve
-               //si la respuesta está mal, jugador 2 retrocede 1 casilla. 
-
-            
-
-            
+            }    
         } catch (Exception ex) {
-          
         }
         
         //Esto permite desabilitar el botón del dado

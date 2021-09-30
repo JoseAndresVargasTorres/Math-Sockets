@@ -464,9 +464,9 @@ public class Micliente extends javax.swing.JFrame {
         Panel8.setFocusable(false);
         jScrollPane18.setViewportView(Panel8);
 
-        p2.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\ganon.png")); // NOI18N
+        p2.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\ganon.png"));
 
-        p1.setIcon(new javax.swing.ImageIcon("C:\\Users\\gmg\\Desktop\\ProyectoDatos\\Math-Sockets\\MathGame\\src\\main\\java\\img\\link.png")); // NOI18N
+        p1.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\link.png"));
 
         jLabel2.setFont(new java.awt.Font("Nirmala UI", 0, 14)); // NOI18N
         jLabel2.setText("Host:");
@@ -476,6 +476,8 @@ public class Micliente extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
         jLabel3.setText("Jugador 2");
+
+        p3.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\ganon.png"));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
