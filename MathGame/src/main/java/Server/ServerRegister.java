@@ -61,7 +61,7 @@ public class ServerRegister extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("SimSun-ExtB", 0, 36)); // NOI18N
         jLabel1.setText("Host:");
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\kenda\\OneDrive\\Documents\\NetBeansProjects\\Testeo\\img\\reload-cat.gif")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("src\\main\\java\\img\\reload-cat.gif")); // NOI18N
         jLabel3.setText("Esperando al");
         jLabel4.setText("jugador 2");
 

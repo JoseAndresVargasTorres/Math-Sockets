@@ -32,8 +32,8 @@ public class Server extends javax.swing.JFrame {
      */
     int p1x1 = 40;
     int p2x1 = 96;
-    int p1y1 = 120;
-    int p2y1 = 120;
+    int p1y1 = 117;
+    int p2y1 = 117;
     int cont = 3;
     int cont2 = 3;
     int movex1 = 104;
@@ -97,18 +97,20 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder1(){
-        listita.retroceder1();        
-        if (cont == 3 ){            
-            p1y1 -= 76;
-            this.p1.setLocation(p1x1,p1y1);
-            cont = 0;
-            movex1 *= -1;            
-        }else{
-            System.out.println("mover1_contador_re: " + cont);
-            p1x1 -= movex1;
-            this.p1.setLocation(p1x1,p1y1);
-            cont++;
-             
+        if (!listita.getPos().tipo.equals("Inicio")){
+            listita.retroceder1();        
+            if (cont == 3 ){            
+                p1y1 -= 76;
+                this.p1.setLocation(p1x1,p1y1);
+                cont = 0;
+                movex1 *= -1;            
+            }else{
+                System.out.println("mover1_contador_re: " + cont);
+                p1x1 -= movex1;
+                this.p1.setLocation(p1x1,p1y1);
+                cont++;
+
+            }
         }
     }
     
@@ -117,20 +119,20 @@ public class Server extends javax.swing.JFrame {
      */
     
     public void retroceder2(){
-
-        listita.retroceder2();        
-        if (cont2 == 3){            
-            p2y1 -= 76;
-            this.p2.setLocation(p2x1,p2y1);
-            cont2 = 0;
-            movex2 *= -1;            
-        }else{
-            System.out.println("mover1_contador_re: " + cont);
-            p2x1 -= movex2;
-            this.p2.setLocation(p2x1,p2y1);
-            cont2++;
+        if (!listita.getPos2().tipo.equals("Inicio")){
+            listita.retroceder2();        
+            if (cont2 == 3){            
+                p2y1 -= 76;
+                this.p2.setLocation(p2x1,p2y1);
+                cont2 = 0;
+                movex2 *= -1;            
+            }else{
+                System.out.println("mover1_contador_re: " + cont);
+                p2x1 -= movex2;
+                this.p2.setLocation(p2x1,p2y1);
+                cont2++;
+            }
         }
-        
     }
     
     /**
@@ -281,7 +283,6 @@ public class Server extends javax.swing.JFrame {
             //Como lo pueden ser los retos que se le envian al otro jugador, entre otros métodos
             while (true) {
                 try {
-                    
                     String i = new DataInputStream(s.getInputStream()).readUTF();
                     String m = i;
                     List<String> test = Arrays.asList(i.split(","));
@@ -310,12 +311,9 @@ public class Server extends javax.swing.JFrame {
                     } else if (m.equals("correcto2")) {
                         mover2();
                     } else if (m.equals("incorrecto2")) {
-                        while(!aux6.jugador1){
-                            aux6 = aux6.siguiente;
-                        }
-                        if(aux6.anterior != null ){
+                        if(listita.getPos().anterior != null){
                             mover2();
-                            retroceder1();
+                            retroceder1();  
                         }else{
                             mover2();  
                         }
@@ -323,8 +321,11 @@ public class Server extends javax.swing.JFrame {
                             
                     }else if (test.get(0).equals("suma")) {
                         int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
-                        int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
-                        if(resultado3 == r) {
+                        String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
+                        resultado3 = resultado3.replaceAll("\\D+","");
+                        if (resultado3.equals("")){
+                            resultado3 = "321654987";
+                        }if(Integer.parseInt(resultado3) == r) {
                             JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("correcto2");
                         } else {
@@ -332,9 +333,12 @@ public class Server extends javax.swing.JFrame {
                             dout.writeUTF("incorrecto2");
                         }  
                     }else if (test.get(0).equals("resta")) {
-                            int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
-                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2)+ "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                            if(resultado3 == r) {
+                        int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
+                        String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
+                        resultado3 = resultado3.replaceAll("\\D+","");
+                        if (resultado3.equals("")){
+                            resultado3 = "321654987";
+                        }if(Integer.parseInt(resultado3) == r) {
                                 JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                                 dout.writeUTF("correcto2");
                             } else {
@@ -342,31 +346,37 @@ public class Server extends javax.swing.JFrame {
                                 dout.writeUTF("incorrecto2");
                             }  
                     }else if (test.get(0).equals("multiplicacion")) {
-                            int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
-                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2)+ "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                            if(resultado3 == r) {
-                                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                                dout.writeUTF("correcto2");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                                dout.writeUTF("incorrecto2");
-                            }  
+                        int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
+                        String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
+                        resultado3 = resultado3.replaceAll("\\D+","");
+                        if (resultado3.equals("")){
+                            resultado3 = "321654987";
+                        }if(Integer.parseInt(resultado3) == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto2");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("incorrecto2");
+                        }  
                     }else if (test.get(0).equals("division")) {
-                            int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
-                            int resultado3 = Integer.parseInt(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" / "+ test.get(2)+ "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE)) ;
-                            if(resultado3 == r) {
-                                JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                                dout.writeUTF("correcto2");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
-                                dout.writeUTF("incorrecto2");
+                        int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
+                        String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" ÷ "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
+                        resultado3 = resultado3.replaceAll("\\D+","");
+                        if (resultado3.equals("")){
+                            resultado3 = "321654987";
+                        }if(Integer.parseInt(resultado3) == r) {
+                            JOptionPane.showMessageDialog(null, "Correcto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("correcto2");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
+                            dout.writeUTF("incorrecto2");
                             }  
                         } else if (m.equals("dadoOn") && !listita.fin.jugador1) {
-                            Dado1.setEnabled(true);
+                            if (listita.getPos().tipo.equals("Final")||listita.getPos2().tipo.equals("Final")){
+                            } else { Dado1.setEnabled(true);}   
                     }
 
                     } catch (Exception ex) {
-                    ex.printStackTrace();
                 }
                 
             }
