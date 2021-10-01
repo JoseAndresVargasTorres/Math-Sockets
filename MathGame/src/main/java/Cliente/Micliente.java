@@ -15,16 +15,17 @@ import java.util.Random;
 
 
 /**
- * Esta clase es para crear cada cliente y proporciona la interfaz gráfica del chat
+ * Esta clase es para crear un cliente el cual tendra una interfaz de juego
  *
- * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
+ * @author Kendall Marín Muñoz,Carlos Andrés Contreras Luna, Jose Andrés Vargas Torres
  * 
  */
 public class Micliente extends javax.swing.JFrame {
+    //Se crea lo necesario para conectarse con el servidor o jugador 1
     String iD, clientID = "";
     DataInputStream din;
     DataOutputStream dout;
-
+    //Se declaran algunas variables que se utilizan en los métodos que permiten mover a los jugadores
     int p1x1 = 38;
     int p1y1 = 112;
     int p2x1 = 94;
@@ -129,15 +130,17 @@ public class Micliente extends javax.swing.JFrame {
    
 
     /**
-     * Crea un nuevo cliente
-     */
+     * En la clase Micliente se encuentra el Socket que permite la conexion con el servidor, 
+     * ademas de la creacion de las casillas y parte de la funcionalidad de las mismas.  
+     */ 
+    
     public Micliente() {
         initComponents();
     }
 
     /**
-     * Este método asigna el usuario y el socket al cliente
-     * También aqui se crean las casillas enlazadas a los nodos
+     * Aquí se encuentran algunas funciones quen nos permiten la comunicación con el servidor o jugador 1
+     * También se crean las casillas enlazadas a los nodos
      * @param i el nombre del usuario en el cliente
      * @param s el socket que utiliza el cliente
      */
@@ -145,7 +148,9 @@ public class Micliente extends javax.swing.JFrame {
         iD = i;
         try {
             initComponents();
+            //Deshabilita el botón dado
             Dado2.setEnabled(false);
+            //Se crean las casillas enlazadas a los nodos de la lista doblemente enlazada
             listita.agregarAlInicio("Inicio", Panel1, true, true);
             listita.agregarAlFinal("Error", Panel2, false, false);
             listita.agregarAlFinal("Error", Panel3, false, false);
@@ -166,12 +171,15 @@ public class Micliente extends javax.swing.JFrame {
             listita.inicio.jugador2 = true; 
             aux6 = listita.inicio;
             idlabel.setText(i);
+            //din y dout permiten recibir y enviar información            
             din = new DataInputStream(s.getInputStream());
             dout = new DataOutputStream(s.getOutputStream());
+            //Localización de los jugadores
             this.p1.setLocation(p1x1,p1y1);
             this.p2.setLocation(p2x1,p2y1);
             getContentPane().setComponentZOrder(this.p1, 0);
             getContentPane().setComponentZOrder(this.p2, 0);
+            //Además, aqui se inicializa el método para leer mensajes
             new Read().start();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -180,7 +188,7 @@ public class Micliente extends javax.swing.JFrame {
     }
 
     /**
-     * Esta clase es para enviar los mensajes
+     * Esta clase es para recibir los mensajes
      */
     class Read extends Thread {
         /**
@@ -199,9 +207,9 @@ public class Micliente extends javax.swing.JFrame {
                     }else if(test.get(0).equals("p1")){
                         host.setText(test.get(1));
                     }else if(m.equals("retroceder1")){
-                        retroceder1();
-                    } else if (test.get(0).equals("0")) {
-                        aux.pan.setText("1."+test.get(1));
+                        retroceder1();                       
+                    } else if (test.get(0).equals("0")) {   //Estas condiciones permiten asignarle                        
+                        aux.pan.setText("1."+test.get(1));  //los nombres y tipos a las casillas del cliente    
                         aux.tipo = test.get(1);
                         aux = aux.siguiente;
                     } else if (test.get(0).equals("1")) {
@@ -259,7 +267,7 @@ public class Micliente extends javax.swing.JFrame {
                     } else if (test.get(0).equals("14")) {
                         aux.pan.setText("15."+test.get(1));
                         aux.tipo = test.get(1);
-                        aux = aux.siguiente;  
+                        aux = aux.siguiente;                       
                     } else if (test.get(0).equals("15")) {
                         aux.pan.setText("16."+test.get(1));
                         aux.tipo = test.get(1);
@@ -289,7 +297,7 @@ public class Micliente extends javax.swing.JFrame {
                             mover2();  
                         }
                         
-                            
+                  //Funcionalidad de los retos de tipo suma          
                 }else if (test.get(0).equals("suma")) {
                         int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -303,7 +311,8 @@ public class Micliente extends javax.swing.JFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto");
-                        }  
+                        }
+                        //Funcionalidad de los retos de tipo resta
                 }else if (test.get(0).equals("resta")) {
                         int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -317,7 +326,8 @@ public class Micliente extends javax.swing.JFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto");
-                        }  
+                        }
+                        //Funcionalidad de los retos de tipo multiplicación
                 }else if (test.get(0).equals("multiplicacion")) {
                         int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -331,7 +341,8 @@ public class Micliente extends javax.swing.JFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto");
-                        }  
+                        }
+                       //Funcionalidad de los retos de tipo división
                 }else if (test.get(0).equals("division")) {
                         int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" ÷ "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -409,7 +420,6 @@ public class Micliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
-        setFocusableWindowState(false);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -737,10 +747,7 @@ public class Micliente extends javax.swing.JFrame {
                 Logger.getLogger(Micliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-    /**
-     * Aqui se crean los elementos utilizados en la interfaz     
-     */
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Dado2;

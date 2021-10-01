@@ -1,10 +1,16 @@
 package Server;
 
+/**
+ * Clase de la lista doblemente enlazada
+ * @author Kendall Marín Muñoz,Carlos Andrés Contreras Luna, Jose Andrés Vargas Torres
+ */
+
 public class ListaDoble {
+    //Se crean dos nodos los cuales serán el nodo inicial y el nodo final de la lista
     public NodoDoble inicio, fin;
     
     /**
-     * En este método se definen los atributos de inicio y fin
+     * En el constructor se definen los atributos de inicio y fin
      */  
 
     public ListaDoble() {
@@ -27,7 +33,7 @@ public class ListaDoble {
     }
 
     /**
-     * Método para mover el jugador1 de nodo
+     * Método para mover el jugador 1 de nodo
      */
     public void mover1() {
         NodoDoble aux = inicio;
@@ -148,7 +154,7 @@ public class ListaDoble {
     }
     
     /**
-     * Método para eliminar al primero de la lista
+     * Método para eliminar al primero de la lista o head
      * @return null
      */
     public NodoDoble deleteFirst() {

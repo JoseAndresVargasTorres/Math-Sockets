@@ -17,19 +17,19 @@ import javax.swing.JOptionPane;
 import javax.swing.*;
 
 /**
- * Esta clase es para crear un servidor con interfaz gráfica simple
+ * Esta clase es para crear un servidor el cual tendra una interfaz de juego
  *
- * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
+ * @author Kendall Marín Muñoz,Carlos Andrés Contreras Luna, Jose Andrés Vargas Torres
  */
 public class Server extends javax.swing.JFrame {
+    //Se crea lo necesario para conectarse con el cliente o jugador 2
     ServerSocket ss;
     HashMap clientColl = new HashMap();
     DataInputStream din;
     DataOutputStream dout;
     DefaultListModel dlm;
-    /**
-     * Aqui se encuneran los metodos y atributos de utilizados en la clase server
-     */
+    
+    //Se declaran algunas variables que se utilizan en los métodos que permiten mover a los jugadores
     int p1x1 = 40;
     int p2x1 = 96;
     int p1y1 = 117;
@@ -68,7 +68,7 @@ public class Server extends javax.swing.JFrame {
         }
     }
     
-        /**
+     /**
      * Este metodo permite mover al jugador 2 de casilla
      */
     
@@ -136,16 +136,16 @@ public class Server extends javax.swing.JFrame {
     }
     
     /**
-     * En Server se encuentra el metodo ServerSocket que permite la conexion con el cliente, 
-     * ademas de la creacion de las casillas y algunos de sus metodos.  
+     * En la clase Server se encuentra el ServerSocket que permite la conexion con el cliente, 
+     * ademas de la creacion de las casillas y parte de la funcionalidad de las mismas.  
      */  
     
     
     public Server() { initComponents();
         /**
-         * Aqui se realiza la conexion que permite recibir del cliente, además de agregar las casillas y colocarlas aleatoriamente.
-         */
-        
+         * Aquí se realiza la conexión que permite la comunicación con el cliente,
+         * además de crear las casillas y ordenarlas aleatoriamente.
+         */        
     }
     Server(String jugador1){
         try {
@@ -164,6 +164,7 @@ public class Server extends javax.swing.JFrame {
             int reto = 7;
             int trampa = 4;
             int tunel = 3;
+            //Se crean las casillas de manera que se enlazan como nodos en la lista doblemente enlazada
             listita.agregarAlInicio("Inicio", Panel1, true, true);            
             listita.agregarAlFinal("Error", Panel2, false, false);
             listita.agregarAlFinal("Error", Panel3, false, false);            
@@ -185,7 +186,7 @@ public class Server extends javax.swing.JFrame {
             NodoDoble aux = listita.inicio.siguiente;
             auxi1 = listita.inicio;
             
-            //Se programa la aleatoriedad de las casillas
+            //Se realiza la aleatoriedad de las casillas
             while(contador<=15){
                 String index = Integer.toString(contador);
                 Random r = new Random();
@@ -222,8 +223,8 @@ public class Server extends javax.swing.JFrame {
                 }                                                          
             }
                                                                                   
-        //Se instanician algunos aux que permitiran realizar correctamente algunos de los métodos de abajo
-        //Además, algunos paneles son editados y se inicializa el método para leer mensajes
+        //Se instancian algunos nodos que se utilizarán en métodos posteriores
+        //Además, se edita la casilla final y se inicializa el método para leer mensajes
         
             this.Panel16.setEditable(false);
             this.Panel16.setText("16.Final");            
@@ -246,7 +247,7 @@ public class Server extends javax.swing.JFrame {
     }
 
     /**
-     * Esta clase es para leer y mostrar los diferentes mensajes enviados por el cliente
+     * Esta permite recibir información del cliente o jugador 2
      */
     class MsgRead extends Thread {
         Socket s;
@@ -261,7 +262,7 @@ public class Server extends javax.swing.JFrame {
             this.ID = ID;
         }
         /**
-         * Este método se encarga de recibir los paquetes de datos (mensajes)         
+         * Este método se encarga de recibir los mensajes         
          */
         public void run() {
             NodoDoble aux = listita.inicio;
@@ -280,7 +281,7 @@ public class Server extends javax.swing.JFrame {
             }
             
             //Este ciclo permite ejecutar diferentes métodos dependiendo de lo que reciba el servidor
-            //Como lo pueden ser los retos que se le envian al otro jugador, entre otros métodos
+            //Como lo pueden ser los retos que se le envian al otro jugador, entre otros métodos que permiten la comunicación constante
             while (true) {
                 try {
                     String i = new DataInputStream(s.getInputStream()).readUTF();
@@ -318,7 +319,7 @@ public class Server extends javax.swing.JFrame {
                             mover2();  
                         }
                         
-                            
+                     //Funcionalidad de los retos de tipo suma      
                     }else if (test.get(0).equals("suma")) {
                         int r = Integer.parseInt(test.get(1)) + Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la suma de "+ test.get(1) +" + "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -331,7 +332,8 @@ public class Server extends javax.swing.JFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto2");
-                        }  
+                        }
+                      //Funcionalidad de los retos de tipo resta
                     }else if (test.get(0).equals("resta")) {
                         int r = Integer.parseInt(test.get(1)) - Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la resta de "+ test.get(1) +" - "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -344,7 +346,8 @@ public class Server extends javax.swing.JFrame {
                             } else {
                                 JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                                 dout.writeUTF("incorrecto2");
-                            }  
+                            }
+                       //Funcionalidad de los retos de tipo multiplicación 
                     }else if (test.get(0).equals("multiplicacion")) {
                         int r = Integer.parseInt(test.get(1)) * Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la multiplicación de "+ test.get(1) +" * "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -357,7 +360,8 @@ public class Server extends javax.swing.JFrame {
                         } else {
                             JOptionPane.showMessageDialog(null, "Incorrecto", "Reto", JOptionPane.INFORMATION_MESSAGE);
                             dout.writeUTF("incorrecto2");
-                        }  
+                        }
+                      //Funcionalidad de los retos de tipo división
                     }else if (test.get(0).equals("division")) {
                         int r = Integer.parseInt(test.get(1)) / Integer.parseInt(test.get(2));
                         String resultado3 = String.valueOf(JOptionPane.showInputDialog(null, "Escriba el resultado de la división de "+ test.get(1) +" ÷ "+ test.get(2) + "\n ¡Solo debe introducir números enteros!", "Reto", JOptionPane.PLAIN_MESSAGE));
@@ -386,8 +390,7 @@ public class Server extends javax.swing.JFrame {
     }
     
     /**
-     * Esta clase es para crear una lista con los clientes conectados
-     * que en este caso solo seria únicamente el jugador 2
+     * Este método permite que el cliente se una al juego
      */
     class PrepareClientList extends Thread {
         /**
@@ -471,7 +474,6 @@ public class Server extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
         setFocusable(false);
-        setFocusableWindowState(false);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -681,8 +683,8 @@ public class Server extends javax.swing.JFrame {
      */
     private void Dado1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Dado1
         try {
-            //Se crea un int que será el valor del dado e irá de 1 a 4
-            //También se crea un random que permitira que el valor del dado sea aleatorio, además de implementarse en algunas funciones
+            //Se crea un int que será el valor del dado el cual estara en un rango de 1 a 4
+            //También se crea un random que permitira que el valor del dado sea aleatorio, además de implementarse en algunas otras funciones
             Random r = new Random();
             int ValorDado = r.nextInt(4)+1;
             //String m = "reto";
@@ -763,10 +765,7 @@ public class Server extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_Dado1
-
-    /**
-     * Aqui se crean los elementos utilizados en la interfaz
-     */
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Dado1;

@@ -1,7 +1,7 @@
 package Server;
 /**
- * Esta es la clase que permite crear los nodos de la lista doble.
- * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
+ * Esta es la clase que permite crear los nodos de la lista doblemente enlazada
+ * @author Kendall Marín Muñoz,Carlos Andrés Contreras Luna, Jose Andrés Vargas Torres
  */
 public class NodoDoble {
 
@@ -12,7 +12,7 @@ public class NodoDoble {
     public NodoDoble siguiente, anterior;
     
     /**
-     * Este metodo recibe los atributos utilizados en otros metodos de la lista doble.
+     * Este metodo recibe los atributos utilizados en otros metodos de la lista doble
      * @param casilla este atributo recibe el tipo de casilla
      * @param panel este atributo recibe un JPanel 
      * @param jugador1 este atributo permite localizar al jugador 1
@@ -23,7 +23,7 @@ public class NodoDoble {
     }
     
     /**
-     * Este metodo recibe los atributos utilizados en otros metodos de la lista doble.
+     * Este metodo recibe los atributos utilizados en otros metodos de la lista doble
      * @param casilla este atributo recibe el tipo de casilla
      * @param panel este atributo recibe un JPanel
      * @param s este atributo permite obtener el siguiente nodo

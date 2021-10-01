@@ -3,13 +3,13 @@ package Server;
 import java.awt.event.ActionEvent;
 
 /**
- * Esta clase es para registrar al cliente con una interfaz gráfica simple
+ * Esta clase es para registrar al cliente/servidor o mejor dicho al jugador 1 y consta de una interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
+ * @author Kendall Marín Muñoz,Carlos Andrés Contreras Luna, Jose Andrés Vargas Torres
  */
 public class ServerRegister extends javax.swing.JFrame {
     /**
-     * Crea un nuevo registro de cliente
+     * Crea un nuevo registro del servidor
      */
     public ServerRegister() {
         initComponents();
@@ -126,8 +126,8 @@ public class ServerRegister extends javax.swing.JFrame {
     }
 
     /**
-     * Este método permite al usuario registrarse con el nombre escrito e
-     * iniciar un cliente, por medio de un botón.
+     * Este método permite al servidor o jugador 1 registrarse con el nombre escrito en el cuadro de texto y
+     * unirse al juego, por medio de un botón.
      *
      * @param evt el evento consecuente a pulsar el botón Entrar
      */

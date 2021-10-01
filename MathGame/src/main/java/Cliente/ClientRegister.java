@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
- * Esta clase es para registrar al cliente con una interfaz gráfica simple
+ * Esta clase es para registrar al cliente y consta de una interfaz gráfica simple
  *
- * @author Kendall Marín Muñoz,Carlos Andres Contreras Luna, Jose Andres Vargas Torres
+ * @author Kendall Marín Muñoz,Carlos Andrés Contreras Luna, Jose Andrés Vargas Torres
  */
 public class ClientRegister extends javax.swing.JFrame {
     /**
@@ -115,8 +115,8 @@ public class ClientRegister extends javax.swing.JFrame {
     }
 
     /**
-     * Este método permite al usuario registrarse con el nombre escrito e
-     * iniciar un cliente, por medio de un botón.
+     * Este método permite al cliente o mejor dicho al jugador 2 registrarse con el nombre escrito en el cuadro de texto y
+     * unirse al juego, por medio de un botón.
      *
      * @param evt el evento consecuente a pulsar el botón Entrar
      */
