@@ -472,7 +472,7 @@ public class Server extends javax.swing.JFrame {
         p3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Server");
+        setTitle("Server: Jugador 1");
         setFocusable(false);
         setResizable(false);
 

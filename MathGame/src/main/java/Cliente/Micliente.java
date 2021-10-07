@@ -419,6 +419,7 @@ public class Micliente extends javax.swing.JFrame {
         p3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cliente: Jugador 2");
         setFocusable(false);
         setResizable(false);
 
